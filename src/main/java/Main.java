@@ -5,6 +5,7 @@ public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
     private static boolean isFinished = false;
+    private static MyAuction myAuction = new MyAuction();
     private static Instruction instruction;
     public static void main(String[] args) {
 
@@ -13,7 +14,7 @@ public class Main {
             String commandName = commandParts.getKey();
             String commandData = commandParts.getValue();
             if (commandName.equals("register")){
-
+                instruction = new Register(myAuction,commandData);
             }else if (commandName.equals("addProject")){
 
             }else if (commandName.equals("bid")){

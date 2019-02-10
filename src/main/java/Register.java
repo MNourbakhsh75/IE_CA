@@ -1,3 +1,4 @@
+import com.google.gson.*;
 
 public class Register implements Instruction{
 
@@ -10,6 +11,16 @@ public class Register implements Instruction{
 
     public void run() {
 
-
+        JsonObject jsonObject = new JsonParser().parse(this.userData).getAsJsonObject();
+        String userObject = jsonObject.get("username").getAsString();
+        User user = new User(userObject);
+        JsonArray skillsObject = jsonObject.get("skills").getAsJsonArray();
+        for (JsonElement je : skillsObject){
+            JsonObject skillObject = je.getAsJsonObject();
+            String name = skillObject.get("name").getAsString();
+            Integer points = skillObject.get("points").getAsInt();
+            user.addSkill(name,points);
+        }
+        this.myAuction.addUser(user);
     }
 }
