@@ -20,7 +20,7 @@ public class Main {
             }else if (commandName.equals("bid")){
                 instruction = new Bid(myAuction,commandData);
             }else if(commandName.equals("auction")){
-
+                instruction = new Auction(myAuction,commandData);
                 isFinished = true;
             }
             instruction.run();
