@@ -16,7 +16,7 @@ public class Main {
             if (commandName.equals("register")){
                 instruction = new Register(myAuction,commandData);
             }else if (commandName.equals("addProject")){
-
+                instruction = new AddProject(myAuction,commandData);
             }else if (commandName.equals("bid")){
 
             }else if(commandName.equals("auction")){
