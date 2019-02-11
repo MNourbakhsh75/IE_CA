@@ -10,18 +10,9 @@ public class MyAuction {
         this.users.add(user);
     }
 
-    public ArrayList<User> getUsers(){
-
-        return this.users;
-    }
     public void addProject(Project project){
 
         this.projects.add(project);
-    }
-
-    public ArrayList<Project> getProjects(){
-
-        return this.projects;
     }
 
     public void addBiddingUser(User user){

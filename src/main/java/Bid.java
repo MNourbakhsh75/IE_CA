@@ -11,19 +11,22 @@ public class Bid implements Instruction {
         this.biddingData = biddingData;
     }
 
-    public void run(){
+    public void run() {
         JsonObject jsonObject = new JsonParser().parse(this.biddingData).getAsJsonObject();
         String bidingUsername = jsonObject.get("biddingUser").getAsString();
         String bidingTitle = jsonObject.get("projectTitle").getAsString();
         Integer bidingAmount = jsonObject.get("bidAmount").getAsInt();
         Project bidingProject = this.myAuction.getProjectBaseOnTitle(bidingTitle);
         User bidingUser = this.myAuction.getUserBaseOnUsername(bidingUsername);
-        HashMap<String,Integer> pjSkills = bidingProject.getSkills();
-        HashMap<String,Integer> usSkills = bidingUser.getSkills();
-        if(checkForEnoughSkills(pjSkills,usSkills) && checkForProperBudget(bidingProject.getBudget(),bidingAmount)){
-            bidingUser.setBidAmount(bidingAmount);
-            this.myAuction.addBiddingUser(bidingUser);
-        }
+        if (bidingProject != null && bidingUser != null){
+            HashMap<String, Integer> pjSkills = bidingProject.getSkills();
+            HashMap<String, Integer> usSkills = bidingUser.getSkills();
+            if (checkForEnoughSkills(pjSkills, usSkills) && checkForProperBudget(bidingProject.getBudget(), bidingAmount)) {
+                bidingUser.setBidAmount(bidingAmount);
+                this.myAuction.addBiddingUser(bidingUser);
+            }
+        }else
+            System.out.println("There is no user with this username or project with this title.");
 
     }
     private static Boolean checkForEnoughSkills(HashMap<String,Integer> pj,HashMap<String,Integer> us){
