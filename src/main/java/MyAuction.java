@@ -49,4 +49,20 @@ public class MyAuction {
         }
         return p;
     }
+    public Boolean checkForUniqueUser(String username){
+        Boolean isUnique = true;
+        for(User u: this.users){
+            if(u.getUsername().equals(username))
+                isUnique = false;
+        }
+        return isUnique;
+    }
+    public Boolean checkForUniqueProjectTitle(String title){
+        Boolean isUnique = true;
+        for(Project p: this.projects){
+            if(p.getTitle().equals(title))
+                isUnique = false;
+        }
+        return isUnique;
+    }
 }
