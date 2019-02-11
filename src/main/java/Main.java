@@ -22,10 +22,12 @@ public class Main {
             }else if(commandName.equals("auction")){
                 instruction = new Auction(myAuction,commandData);
                 isFinished = true;
+            }else{
+                System.out.println("Unknown Command");
+                continue;
             }
             instruction.run();
         }
-
     }
 
     private static Pair<String, String> getCommandParts() {
