@@ -4,3 +4,5 @@ Internet Engineering First CA :
 -Creating a java program (Job Oonja!) using maven.
 
 -Working with json format using gson (https://github.com/google/gson).
+
+-Using Maven.gitignore (https://github.com/github/gitignore/blob/master/Maven.gitignore).
