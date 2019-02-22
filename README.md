@@ -1,5 +1,5 @@
-# IE_CA1
-Internet Engineering First CA :
+# IE_CA
+Internet Engineering Computer Assignment :
 
 -Creating a java program (Job Oonja!) using maven.
 
