@@ -5,4 +5,4 @@ Internet Engineering First CA :
 
 -Working with json format using gson (https://github.com/google/gson).
 
--Using Maven.gitignore (https://github.com/github/gitignore/blob/master/Maven.gitignore).
+-Using gitignore from (https://gitignore.io).
