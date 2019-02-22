@@ -1,9 +1,13 @@
+package AuctionData;
+
+import itemException.*;
 import java.util.ArrayList;
+
 //Receiver
 public class MyAuction {
     private ArrayList <User> users = new ArrayList<User>();
     private ArrayList <Project> projects = new ArrayList<Project>();
-    private ArrayList <User> biddingUser = new ArrayList<User>();
+//    private ArrayList <AuctionData.User> biddingUser = new ArrayList<AuctionData.User>();
 
     public void addUser(User user){
 
@@ -15,19 +19,17 @@ public class MyAuction {
         this.projects.add(project);
     }
 
-    public void addBiddingUser(User user){
+//    public void addBiddingUser(AuctionData.User user){
+//
+//        this.biddingUser.add(user);
+//    }
 
-        this.biddingUser.add(user);
-    }
+//
 
-    public ArrayList<User> getBiddingUser(){
-
-        return this.biddingUser;
-    }
-    public User getUserBaseOnUsername(String username){
+    public User getUserBaseOnId(String id){
         User u = null;
         for (User us: this.users ){
-            if (us.getUsername().equals(username))
+            if (us.getId().equals(id))
                 u = us;
         }
         return u;
@@ -40,20 +42,16 @@ public class MyAuction {
         }
         return p;
     }
-    public Boolean checkForUniqueUser(String username){
-        Boolean isUnique = true;
+    public void checkForUniqueUser(String id) throws ItemAlreadyExistsException {
         for(User u: this.users){
-            if(u.getUsername().equals(username))
-                isUnique = false;
+            if(u.getId().equals(id))
+                throw new ItemAlreadyExistsException();
         }
-        return isUnique;
     }
-    public Boolean checkForUniqueProjectTitle(String title){
-        Boolean isUnique = true;
+    public void checkForUniqueProjectId(String id) throws ItemAlreadyExistsException{
         for(Project p: this.projects){
-            if(p.getTitle().equals(title))
-                isUnique = false;
+            if(p.getId().equals(id))
+                throw new ItemAlreadyExistsException();
         }
-        return isUnique;
     }
 }

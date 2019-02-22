@@ -1,3 +1,7 @@
+
+import AuctionData.MyAuction;
+import commands.*;
+import AuctionData.*;
 import javafx.util.Pair;
 import java.util.Scanner;
 //Client
@@ -19,9 +23,9 @@ public class Main {
                 } else if (commandName.equals("addProject")) {
                     instruction = new AddProject(myAuction, commandData);
                 } else if (commandName.equals("bid")) {
-                    instruction = new Bid(myAuction, commandData);
+                    instruction = new commands.BidCommand(myAuction, commandData);
                 } else if (commandName.equals("auction")) {
-                    instruction = new Auction(myAuction, commandData);
+//                    instruction = new commands.Auction(myAuction, commandData);
                     isFinished = true;
                 } else {
                     System.out.println("Unknown Command");
