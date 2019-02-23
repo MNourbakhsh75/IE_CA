@@ -15,12 +15,16 @@ public class AddProject implements Instruction {
 
     public void run() {
         Gson gson = new Gson();
-        Project project = gson.fromJson(this.projectData, Project.class);
-        try {
-            this.myAuction.checkForUniqueProjectId(project.getId());
-            this.myAuction.addProject(project);
-        }catch (ItemAlreadyExistsException ie){
-            System.out.println("There is a project with this id.Try again.");
+        JsonArray jsonObject = gson.fromJson(this.projectData,JsonArray.class);
+        for(JsonElement jo : jsonObject){
+            Project project = gson.fromJson(jo, Project.class);
+//            System.out.println(project.getTitle());
+            try {
+                this.myAuction.checkForUniqueProjectId(project.getId());
+                this.myAuction.addProject(project);
+            }catch (ItemAlreadyExistsException ie){
+                System.out.println("There is a project with this id.Try again.");
+            }
         }
     }
 }

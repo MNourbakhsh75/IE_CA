@@ -35,17 +35,17 @@ public class BidCommand implements Instruction {
 //            System.out.println("There is no user with this username or project with this title.");
 
     }
-    private static Boolean checkForEnoughSkills(HashMap<String,Integer> pj,HashMap<String,Integer> us){
-        Boolean isEnough = true;
-        for(String key : pj.keySet()){
-            if(us.containsKey(key)){
-                if(pj.get(key) > us.get(key))
-                    isEnough = false;
-            }else
-                isEnough = false;
-        }
-        return isEnough;
-    }
+//    private static Boolean checkForEnoughSkills(HashMap<String,Integer> pj,HashMap<String,Integer> us){
+//        Boolean isEnough = true;
+//        for(String key : pj.keySet()){
+//            if(us.containsKey(key)){
+//                if(pj.get(key) > us.get(key))
+//                    isEnough = false;
+//            }else
+//                isEnough = false;
+//        }
+//        return isEnough;
+//    }
 
     private static Boolean checkForProperBudget (Integer pb,Integer ub){
         Boolean isProper = true;

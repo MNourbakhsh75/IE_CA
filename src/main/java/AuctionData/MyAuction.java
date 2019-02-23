@@ -19,7 +19,14 @@ public class MyAuction {
         this.projects.add(project);
     }
 
-//    public void addBiddingUser(AuctionData.User user){
+    public ArrayList<Project> getProjects() {
+        return projects;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+    //    public void addBiddingUser(AuctionData.User user){
 //
 //        this.biddingUser.add(user);
 //    }
@@ -34,10 +41,10 @@ public class MyAuction {
         }
         return u;
     }
-    public Project getProjectBaseOnTitle (String title){
+    public Project getProjectBaseOnId (String id){
         Project p = null;
         for(Project pj : this.projects){
-            if(pj.getTitle().equals(title))
+            if(pj.getId().equals(id))
                 p = pj;
         }
         return p;
