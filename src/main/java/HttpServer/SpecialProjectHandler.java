@@ -9,8 +9,6 @@ import itemException.NotEnoughSkillsException;
 import itemException.itemNotFoundException;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.StringTokenizer;
 
 import static Functions.Functions.*;
@@ -27,13 +25,8 @@ public class SpecialProjectHandler implements HttpHandler {
         String context = tokenizer.hasMoreTokens() ? tokenizer.nextToken() : null;
         String id = tokenizer.hasMoreTokens() ? tokenizer.nextToken() : null;
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Project</title>\n" +
-                "</head>\n" +
-                "<body>");
+        String response;
+        response = createSpecialProjectResponse(stringBuilder,null,1);
         System.out.println("id : " + id);
         if (id != null){
             try {
@@ -41,13 +34,7 @@ public class SpecialProjectHandler implements HttpHandler {
                 Project project = this.myAuction.getProjectBaseOnId(id);
                 try {
                     checkForEnoughSkills(user.getSkills(),project.getSkills());
-                    stringBuilder.append("<ul>\n" +
-                            "        <li>id: " + project.getId() + "</li>\n" +
-                            "        <li>title: " + project.getTitle() + "</li>\n" +
-                            "        <li>description: " + project.getDescription() + "</li>\n" +
-                            "        <li>imageUrl: <img src=\"" + project.getImageUrl() + "\" style=\"width: 50px; height: 50px;\"></li>\n" +
-                            "        <li>budget: " + project.getBudget() + "</li>\n" +
-                            "    </ul>");
+                    response = createSpecialProjectResponse(stringBuilder,project,2);
                 }catch (NotEnoughSkillsException e){
                     String m = "not enough skills!";
                     writeError(httpExchange,m);
@@ -61,9 +48,7 @@ public class SpecialProjectHandler implements HttpHandler {
             writeError(httpExchange,ms);
             return;
         }
-        stringBuilder.append("</body>\n" +
-                "</html>");
-        writeOnOutPut(httpExchange,stringBuilder.toString());
-
+        response = createSpecialProjectResponse(stringBuilder,null,3);
+        writeOnOutPut(httpExchange,response);
     }
 }

@@ -1,5 +1,6 @@
 package Functions;
 
+import AuctionData.Project;
 import AuctionData.Skills;
 import com.sun.net.httpserver.HttpExchange;
 import itemException.*;
@@ -43,6 +44,71 @@ public class Functions {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
-
+    }
+    public static String createAllProjectResponse(StringBuilder stringBuilder, Project p, Integer flag){
+        if(flag == 1) {
+            stringBuilder.append("<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <title>Projects</title>\n" +
+                    "    <style>\n" +
+                    "        table {\n" +
+                    "            text-align: center;\n" +
+                    "            margin: 0 auto;\n" +
+                    "        }\n" +
+                    "        td {\n" +
+                    "            min-width: 300px;\n" +
+                    "            margin: 5px 5px 5px 5px;\n" +
+                    "            text-align: center;\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <table>\n" +
+                    "        <tr>\n" +
+                    "            <th>id</th>\n" +
+                    "            <th>title</th>\n" +
+                    "            <th>budget</th>\n" +
+                    "        </tr>\n");
+        }
+        if(flag == 2){
+            stringBuilder.append("<tr>\n" +
+                    "<td>"+p.getId()+"</td>\n" +
+                    "<td>"+p.getTitle()+"</td>\n" +
+                    "<td>"+p.getBudget()+"</td>\n" +
+                    "</tr>\n");
+        }
+        if(flag == 3){
+            stringBuilder.append("</table>\n" +
+                    "</body>\n" +
+                    "</html>");
+        }
+        return stringBuilder.toString();
+    }
+    public static String createSpecialProjectResponse(StringBuilder stringBuilder,Project project,Integer flag){
+        if(flag == 1){
+            stringBuilder.append("<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <title>Project</title>\n" +
+                    "</head>\n" +
+                    "<body>");
+        }
+        if(flag == 2){
+            stringBuilder.append("<ul>\n" +
+                    "        <li>id: " + project.getId() + "</li>\n" +
+                    "        <li>title: " + project.getTitle() + "</li>\n" +
+                    "        <li>description: " + project.getDescription() + "</li>\n" +
+                    "        <li>imageUrl: <img src=\"" + project.getImageUrl() + "\" style=\"width: 50px; height: 50px;\"></li>\n" +
+                    "        <li>budget: " + project.getBudget() + "</li>\n" +
+                    "    </ul>");
+        }
+        if(flag == 3){
+            stringBuilder.append("</body>\n" +
+                    "</html>");
+        }
+        return stringBuilder.toString();
     }
 }
