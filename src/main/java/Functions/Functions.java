@@ -2,6 +2,7 @@ package Functions;
 
 import AuctionData.Project;
 import AuctionData.Skills;
+import AuctionData.User;
 import com.sun.net.httpserver.HttpExchange;
 import itemException.*;
 
@@ -10,6 +11,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class Functions {
 
@@ -107,6 +109,39 @@ public class Functions {
         }
         if(flag == 3){
             stringBuilder.append("</body>\n" +
+                    "</html>");
+        }
+        return stringBuilder.toString();
+    }
+    public static ArrayList<String> getTokenizUrl(String url){
+        ArrayList<String> token = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(url, "/");
+        while (tokenizer.hasMoreTokens()){
+            token.add(tokenizer.nextToken());
+        }
+        return token;
+    }
+    public static String createSpecialUserResponse(StringBuilder stringBuilder,User u,Integer flag){
+        if(flag == 1) {
+            stringBuilder.append("<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <title>User</title>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <ul>");
+        }
+        if(flag == 2){
+            stringBuilder.append("<li>id: 1</li>\n" +
+                    "        <li>first name: "+u.getFirstName()+"</li>\n" +
+                    "        <li>last name: "+u.getLastName()+"</li>\n" +
+                    "        <li>jobTitle: "+u.getJobTitle()+"</li>\n" +
+                    "        <li>bio: "+u.getBio()+"</li>");
+        }
+        if(flag == 3){
+            stringBuilder.append("</ul>\n" +
+                    "</body>\n" +
                     "</html>");
         }
         return stringBuilder.toString();
