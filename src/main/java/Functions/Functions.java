@@ -1,8 +1,12 @@
 package Functions;
 
 import AuctionData.Skills;
+import com.sun.net.httpserver.HttpExchange;
 import itemException.*;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,5 +27,22 @@ public class Functions {
         }
         if(t.size() != p.size())
             throw new NotEnoughSkillsException();
+    }
+
+    public static void writeOnOutPut(HttpExchange httpExchange, String data) throws IOException {
+        byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
+        httpExchange.sendResponseHeaders(200,bytes.length);
+        OutputStream outputStream = httpExchange.getResponseBody();
+        outputStream.write(bytes);
+        outputStream.close();
+    }
+
+    public static void writeError(HttpExchange httpExchange,String ms) throws IOException{
+        String response = "<html>" + "<body>"+ms+"</body>" + "</html>";
+        httpExchange.sendResponseHeaders(403,response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+
     }
 }

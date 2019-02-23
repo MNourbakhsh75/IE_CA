@@ -33,20 +33,24 @@ public class MyAuction {
 
 //
 
-    public User getUserBaseOnId(String id){
+    public User getUserBaseOnId(String id) throws itemNotFoundException{
         User u = null;
         for (User us: this.users ){
             if (us.getId().equals(id))
                 u = us;
         }
+        if(u == null )
+            throw new itemNotFoundException();
         return u;
     }
-    public Project getProjectBaseOnId (String id){
+    public Project getProjectBaseOnId (String id) throws itemNotFoundException{
         Project p = null;
         for(Project pj : this.projects){
             if(pj.getId().equals(id))
                 p = pj;
         }
+        if(p == null)
+            throw new itemNotFoundException();
         return p;
     }
     public void checkForUniqueUser(String id) throws ItemAlreadyExistsException {

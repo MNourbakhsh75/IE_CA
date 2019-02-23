@@ -20,7 +20,7 @@ public class AllProjectHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange t) throws IOException {
-        System.out.println("hand");
+        System.out.println("All Project");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -47,29 +47,36 @@ public class AllProjectHandler implements HttpHandler {
                 "            <th>budget</th>\n" +
                 "        </tr>\n");
         ArrayList<Project> projects = this.myAuction.getProjects();
-        User user = this.myAuction.getUserBaseOnId("1");
-        for(Project p : projects){
-            try {
-                checkForEnoughSkills(user.getSkills(),p.getSkills());
-                stringBuilder.append("        <tr>\n" +
-                        "            <td>"+p.getId()+"</td>\n" +
-                        "            <td>"+p.getTitle()+"</td>\n" +
-                        "            <td>"+p.getBudget()+"</td>\n" +
-                        "        </tr>\n");
-            } catch (NotEnoughSkillsException e) {
+        try {
+            User user = this.myAuction.getUserBaseOnId("1");
+            for(Project p : projects){
+                try {
+                    checkForEnoughSkills(user.getSkills(),p.getSkills());
+                    stringBuilder.append("<tr>\n" +
+                            "<td>"+p.getId()+"</td>\n" +
+                            "<td>"+p.getTitle()+"</td>\n" +
+                            "<td>"+p.getBudget()+"</td>\n" +
+                            "</tr>\n");
+                } catch (NotEnoughSkillsException e) {
 
+                }
             }
+        }catch (itemNotFoundException ie){
+            System.out.println("user not found");
         }
-        stringBuilder.append("     </table>\n" +
+
+        stringBuilder.append("</table>\n" +
                 "</body>\n" +
                 "</html>");
 
-//        t.getRequestHeaders().set("Content-Type","text/html;charset=utf-8");
-        byte[] bytes = stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
-        t.sendResponseHeaders(200, bytes.length);
+        writeOnOutPut(t,stringBuilder.toString());
 
-        OutputStream os = t.getResponseBody();
-        os.write(bytes);
-        os.close();
+//        t.getRequestHeaders().set("Content-Type","text/html;charset=utf-8");
+//        byte[] bytes = stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
+//        t.sendResponseHeaders(200, bytes.length);
+//
+//        OutputStream os = t.getResponseBody();
+//        os.write(bytes);
+//        os.close();
     }
 }

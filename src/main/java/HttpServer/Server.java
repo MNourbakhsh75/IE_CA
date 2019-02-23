@@ -19,7 +19,7 @@ public class Server {
     public void startServer() throws Exception {
         HttpServer server = create(new InetSocketAddress(8080), 0);
         server.createContext("/project", new AllProjectHandler(this.myAuction));
-//        server.createContext("/test2", new MyHandler(2));
+        server.createContext("/project/", new SpecialProjectHandler(this.myAuction));
         server.setExecutor(null);
         server.start();
     }
