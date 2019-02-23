@@ -3,6 +3,9 @@ package Functions;
 import AuctionData.Project;
 import AuctionData.Skills;
 import AuctionData.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import itemException.*;
 
@@ -145,5 +148,36 @@ public class Functions {
                     "</html>");
         }
         return stringBuilder.toString();
+    }
+
+    public static String addStaticUser(){ //!!!!!
+
+        JsonObject jsonObject1 = new JsonObject();
+        JsonObject jsonObject2 = new JsonObject();
+        JsonObject jsonObject3 = new JsonObject();
+        JsonObject jsonObject4 = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id","1");
+        jsonObject.addProperty("firstName","علی");
+        jsonObject.addProperty("lastName","شریف زاده");
+        jsonObject.addProperty("jobTitle","برنامه نویس وب");
+        jsonObject.addProperty("profilePictureURL","");
+        jsonObject.addProperty("bio","روی سنگ قبرم بنویسید : خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت");
+        jsonObject1.addProperty("name","HTML");
+        jsonObject1.addProperty("point",5);
+        jsonArray.add(jsonObject1);
+        jsonObject2.addProperty("name","Javascript");
+        jsonObject2.addProperty("point",4);
+        jsonArray.add(jsonObject2);
+        jsonObject3.addProperty("name","C++");
+        jsonObject3.addProperty("point",2);
+        jsonArray.add(jsonObject3);
+        jsonObject4.addProperty("name","Java");
+        jsonObject4.addProperty("point",3);
+        jsonArray.add(jsonObject4);
+        jsonObject.add("skills",jsonArray);
+//        System.out.println("ss : " + jsonObject);
+        return jsonObject.toString();
     }
 }

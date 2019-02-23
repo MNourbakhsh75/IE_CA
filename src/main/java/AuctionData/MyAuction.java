@@ -8,7 +8,7 @@ public class MyAuction {
     private ArrayList <User> users = new ArrayList<User>();
     private ArrayList <Project> projects = new ArrayList<Project>();
 //    private ArrayList <AuctionData.User> biddingUser = new ArrayList<AuctionData.User>();
-
+    private ArrayList<String> allSkills = new ArrayList<>();
     public void addUser(User user){
 
         this.users.add(user);
@@ -26,12 +26,14 @@ public class MyAuction {
     public ArrayList<User> getUsers() {
         return users;
     }
-    //    public void addBiddingUser(AuctionData.User user){
-//
-//        this.biddingUser.add(user);
-//    }
 
-//
+    public ArrayList<String> getAllSkills() {
+        return allSkills;
+    }
+
+    public void addSkills(String name){
+        this.allSkills.add(name);
+    }
 
     public User getUserBaseOnId(String id) throws itemNotFoundException{
         User u = null;

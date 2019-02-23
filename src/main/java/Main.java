@@ -8,6 +8,9 @@ import java.net.URL;
 import java.util.Scanner;
 import HttpServer.*;
 import Request.*;
+
+import static Functions.Functions.addStaticUser;
+
 //Client
 public class Main {
 
@@ -18,46 +21,38 @@ public class Main {
     private static Request request = new Request();
     private static Server server;
     public static void main(String[] args) throws Exception{
-        String getRes = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
-        instruction = new AddProject(myAuction, getRes);
+        instruction = new Register(myAuction,addStaticUser());
         instruction.run();
-//        register
-//        String userInfo = "{"id":"1","firstName":"علی","lastName":"شریف زاده","jobTitle":"برنامه نویس وب","profilePictureURL":"","bio":"روی سنگ قبرم بنویسید : خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت","skills":[{"name":"HTML","point":5},{"name":"Javascript","point":4},{"name":"C++","point":2},{"name":"Java","point":3}]}";
-        User user = new User();
-        user.setBio("روی سنگ قبرم بنویسید : خدا بیامرز خیلی کارا میخواست بکنه ولی پول نداشت");
-        user.setFirstName("علی");
-        user.setLastName("شریف زاده");
-        user.setId("1");
-        user.setJobTitle("برنامه نویس وب");
-        user.addSkill("HTML",5);
-        user.addSkill("C++",2);
-        user.addSkill("Javascript",4);
-        user.addSkill("Java",3);
-        myAuction.addUser(user);
+        String getProjects = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
+        instruction = new AddProject(myAuction, getProjects);
+        instruction.run();
+        String getSkills = request.getReq(new URL("http://142.93.134.194:8000/joboonja/skill "));
+        instruction = new AddSkills(myAuction,getSkills);
+        instruction.run();
         server = new Server(myAuction);
         server.startServer();
-//        while (!isFinished) {
-//            Pair<String, String> commandParts = getCommandParts();
-//            if (commandParts != null) {
-//                String commandName = commandParts.getKey();
-//                String commandData = commandParts.getValue();
-//                if (commandName.equals("register")) {
-//                    instruction = new Register(myAuction, commandData);
-//                } else if (commandName.equals("addProject")) {
-//                    instruction = new AddProject(myAuction, commandData);
-//                } else if (commandName.equals("bid")) {
-//                    instruction = new commands.BidCommand(myAuction, commandData);
-//                } else if (commandName.equals("auction")) {
-////                    instruction = new commands.Auction(myAuction, commandData);
-//                    isFinished = true;
-//                } else {
-//                    System.out.println("Unknown Command");
-//                    continue;
-//                }
-//                instruction.run();
-//            }else
-//                System.out.println("Invalid input.");
-//        }
+        while (!isFinished) {
+            Pair<String, String> commandParts = getCommandParts();
+            if (commandParts != null) {
+                String commandName = commandParts.getKey();
+                String commandData = commandParts.getValue();
+                if (commandName.equals("register")) {
+                    instruction = new Register(myAuction, commandData);
+                } else if (commandName.equals("addProject")) {
+                    instruction = new AddProject(myAuction, commandData);
+                } else if (commandName.equals("bid")) {
+                    instruction = new commands.BidCommand(myAuction, commandData);
+                } else if (commandName.equals("auction")) {
+                    instruction = new commands.Auction(myAuction, commandData);
+                    isFinished = true;
+                } else {
+                    System.out.println("Unknown Command");
+                    continue;
+                }
+                instruction.run();
+            }else
+                System.out.println("Invalid input.");
+        }
     }
 
     private static Pair<String, String> getCommandParts() {
