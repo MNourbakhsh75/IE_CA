@@ -3,7 +3,6 @@ package Functions;
 import AuctionData.Project;
 import AuctionData.Skills;
 import AuctionData.User;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Functions {
@@ -116,7 +114,7 @@ public class Functions {
         }
         return stringBuilder.toString();
     }
-    public static ArrayList<String> getTokenizUrl(String url){
+    public static ArrayList<String> getTokenizeUrl(String url){
         ArrayList<String> token = new ArrayList<>();
         StringTokenizer tokenizer = new StringTokenizer(url, "/");
         while (tokenizer.hasMoreTokens()){

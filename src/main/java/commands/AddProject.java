@@ -18,7 +18,6 @@ public class AddProject implements Instruction {
         JsonArray jsonObject = gson.fromJson(this.projectData,JsonArray.class);
         for(JsonElement jo : jsonObject){
             Project project = gson.fromJson(jo, Project.class);
-//            System.out.println(project.getTitle());
             try {
                 this.myAuction.checkForUniqueProjectId(project.getId());
                 this.myAuction.addProject(project);

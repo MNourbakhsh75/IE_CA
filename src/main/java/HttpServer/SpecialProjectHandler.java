@@ -22,7 +22,7 @@ public class SpecialProjectHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         System.out.println("SpecialProjectHandler");
-        ArrayList<String> token = getTokenizUrl(httpExchange.getRequestURI().getPath());
+        ArrayList<String> token = getTokenizeUrl(httpExchange.getRequestURI().getPath());
         StringBuilder stringBuilder = new StringBuilder();
         String response;
         response = createSpecialProjectResponse(stringBuilder,null,1);
@@ -36,15 +36,15 @@ public class SpecialProjectHandler implements HttpHandler {
                     response = createSpecialProjectResponse(stringBuilder,null,3);
                     writeOnOutPut(httpExchange,response);
                 }catch (NotEnoughSkillsException e){
-                    String m = "not enough skills!";
+                    String m = "you dont have enough skills to see this project :(";
                     writeError(httpExchange,m);
                 }
             }catch (itemNotFoundException ie){
-                String ms = "there is no project with this id";
+                String ms = "oops...there is no project with this id !!";
                 writeError(httpExchange,ms);
             }
         }else{
-            String ms = "incorrect url";
+            String ms = "incorrect url !!";
             writeError(httpExchange,ms);
             return;
         }

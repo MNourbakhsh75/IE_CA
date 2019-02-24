@@ -22,7 +22,7 @@ public class SpecialUserHandler implements HttpHandler {
             String response;
             StringBuilder stringBuilder = new StringBuilder();
             response = createSpecialUserResponse(stringBuilder,null,1);
-            ArrayList<String> token = getTokenizUrl(httpExchange.getRequestURI().getPath());
+            ArrayList<String> token = getTokenizeUrl(httpExchange.getRequestURI().getPath());
             if(token.size() != 1){
                 try {
                     User user = this.myAuction.getUserBaseOnId(token.get(1));
@@ -30,10 +30,10 @@ public class SpecialUserHandler implements HttpHandler {
                     response = createSpecialUserResponse(stringBuilder,null,3);
                     writeOnOutPut(httpExchange,response);
                 }catch (itemNotFoundException e){
-                    writeError(httpExchange,"there is no user with this id");
+                    writeError(httpExchange,"oops...there is no user with this id !!");
                 }
             }else{
-                String m = "incorrect url";
+                String m = "incorrect url !!";
                 writeError(httpExchange,m);
             }
     }
