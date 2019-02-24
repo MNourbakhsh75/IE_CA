@@ -175,7 +175,6 @@ public class Functions {
         jsonObject4.addProperty("point",3);
         jsonArray.add(jsonObject4);
         jsonObject.add("skills",jsonArray);
-//        System.out.println("ss : " + jsonObject);
         return jsonObject.toString();
     }
 }

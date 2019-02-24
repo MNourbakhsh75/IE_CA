@@ -1,7 +1,6 @@
 
 import AuctionData.MyAuction;
 import commands.*;
-import AuctionData.*;
 import javafx.util.Pair;
 
 import java.net.URL;
@@ -26,7 +25,7 @@ public class Main {
         String getProjects = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
         instruction = new AddProject(myAuction, getProjects);
         instruction.run();
-        String getSkills = request.getReq(new URL("http://142.93.134.194:8000/joboonja/skill "));
+        String getSkills = request.getReq(new URL("http://142.93.134.194:8000/joboonja/skill"));
         instruction = new AddSkills(myAuction,getSkills);
         instruction.run();
         server = new Server(myAuction);

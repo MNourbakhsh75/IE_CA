@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class MyAuction {
     private ArrayList <User> users = new ArrayList<User>();
     private ArrayList <Project> projects = new ArrayList<Project>();
-//    private ArrayList <AuctionData.User> biddingUser = new ArrayList<AuctionData.User>();
     private ArrayList<String> allSkills = new ArrayList<>();
     public void addUser(User user){
 

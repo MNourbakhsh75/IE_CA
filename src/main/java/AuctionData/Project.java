@@ -49,9 +49,9 @@ public class Project {
         return skills;
     }
 
-//    public void addBids(ArrayList<Bid> bids) {
-//        this.bids = bids;
-//    }
+    public void addBids(ArrayList<Bid> bids) {
+        this.bids = bids;
+    }
 
     public Long getDeadline() {
         return deadline;

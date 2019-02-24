@@ -10,7 +10,6 @@ import itemException.itemNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import static Functions.Functions.*;
 
@@ -46,7 +45,6 @@ public class SpecialProjectHandler implements HttpHandler {
         }else{
             String ms = "incorrect url !!";
             writeError(httpExchange,ms);
-            return;
         }
     }
 }
