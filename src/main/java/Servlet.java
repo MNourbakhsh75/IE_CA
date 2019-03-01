@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import JoboonjaDB.*;
+import itemException.*;
+import static JoboonjaDB.JDB.accessDataBase;
 
 @WebServlet("/Servlet")
 public class Servlet extends HttpServlet {
@@ -16,6 +19,11 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<h3>Hello World!!</h3>");
+        try {
+            Project project = accessDataBase().getProjectBaseOnId("182491ec-ad35-4682-a061-2f13edce6899");
+            out.println("<h3>"+project.getTitle()+"</h3>");
+        }catch (itemNotFoundException ie){
+            out.println("<h3>://///</h3>");
+        }
     }
 }

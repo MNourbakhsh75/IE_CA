@@ -1,8 +1,6 @@
 package Functions;
 
-import AuctionData.Project;
-import AuctionData.Skills;
-import AuctionData.User;
+import JoboonjaDB.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;

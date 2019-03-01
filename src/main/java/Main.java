@@ -4,7 +4,7 @@ import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.Scanner;
-import HttpServer.*;
+//import HttpServer.*;
 import Request.*;
 
 import static Functions.Functions.addStaticUser;
@@ -16,13 +16,14 @@ public class Main {
     private static boolean isFinished = false;
     private static Instruction instruction;
     private static Request request = new Request();
-    private static Server server;
+//    private static Server server;
     public static void main(String[] args) throws Exception{
 //        instruction = new Register(myAuction,addStaticUser());
 //        instruction.run();
 //        String getProjects = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
-//        instruction = new AddProject(myAuction, getProjects);
+//        instruction = new AddProject(getProjects);
 //        instruction.run();
+//        System.out.println("kharoo!");
 //        String getSkills = request.getReq(new URL("http://142.93.134.194:8000/joboonja/skill"));
 //        instruction = new AddSkills(myAuction,getSkills);
 //        instruction.run();
