@@ -12,7 +12,7 @@ public class Server {
         this.myAuction = myAuction;
     }
     public void startServer() throws Exception {
-        HttpServer server = create(new InetSocketAddress(8080), 0);
+        HttpServer server = create(new InetSocketAddress(8082), 0);
         server.createContext("/project", new AllProjectHandler(this.myAuction));
         server.createContext("/project/", new SpecialProjectHandler(this.myAuction));
         server.createContext("/user/",new SpecialUserHandler(this.myAuction));

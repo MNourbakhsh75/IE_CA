@@ -1,13 +1,21 @@
-package AuctionData;
+package JoboonjaDB;
 
-import itemException.*;
 import java.util.ArrayList;
+import itemException.*;
 
-//Receiver
-public class MyAuction {
+public class JDB {
+
+    private static JDB JoboonjaDataBase = new JDB();
     private ArrayList <User> users = new ArrayList<User>();
     private ArrayList <Project> projects = new ArrayList<Project>();
     private ArrayList<String> allSkills = new ArrayList<>();
+
+    public static JDB accessDataBase(){
+        return JoboonjaDataBase;
+    }
+
+    private JDB() {
+    }
     public void addUser(User user){
 
         this.users.add(user);

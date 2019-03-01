@@ -1,7 +1,6 @@
-package AuctionData;
+package JoboonjaDB;
 
-import AuctionData.Project;
-import AuctionData.User;
+import JoboonjaDB.*;
 
 public class Bid {
     private User bidingUser;

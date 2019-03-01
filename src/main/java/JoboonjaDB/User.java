@@ -1,6 +1,6 @@
-package AuctionData;
+package JoboonjaDB;
 
-import AuctionData.Skills;
+import JoboonjaDB.Skills;
 
 import java.util.ArrayList;
 

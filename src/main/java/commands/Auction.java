@@ -1,20 +1,20 @@
-package commands;
-import AuctionData.*;
-
-import java.util.HashMap;
-
-public class Auction implements Instruction {
-
-    private MyAuction myAuction;
-    private String auctionData;
-    private HashMap<String,Integer> weights = new HashMap<String, Integer>();
-    public Auction(MyAuction myAuction, String auctionData){
-        this.myAuction = myAuction;
-        this.auctionData = auctionData;
-    }
-
-
-    public void run() {
+//package commands;
+//import AuctionData.*;
+//
+//import java.util.HashMap;
+//
+//public class Auction implements Instruction {
+//
+//    private MyAuction myAuction;
+//    private String auctionData;
+//    private HashMap<String,Integer> weights = new HashMap<String, Integer>();
+//    public Auction(MyAuction myAuction, String auctionData){
+//        this.myAuction = myAuction;
+//        this.auctionData = auctionData;
+//    }
+//
+//
+//    public void run() {
 //        JsonObject jsonObject = new JsonParser().parse(this.auctionData).getAsJsonObject();
 //        String titleObject = jsonObject.get("projectTitle").getAsString();
 //        AuctionData.Project auctionProject = this.myAuction.getProjectBaseOnTitle(titleObject);
@@ -37,16 +37,16 @@ public class Auction implements Instruction {
 //            System.out.println("winner: " + findMaxWeight(this.weights));
 //        }else
 //            System.out.println("There is no biding user or project with this title.");
-    }
-    public static String findMaxWeight(HashMap<String,Integer> w){
-        String username = null;
-        Integer max = 0;
-        for(String s : w.keySet()){
-            if(w.get(s) >= max) {
-                max = w.get(s);
-                username = s;
-            }
-        }
-        return username;
-    }
-}
+//    }
+//    public static String findMaxWeight(HashMap<String,Integer> w){
+//        String username = null;
+//        Integer max = 0;
+//        for(String s : w.keySet()){
+//            if(w.get(s) >= max) {
+//                max = w.get(s);
+//                username = s;
+//            }
+//        }
+//        return username;
+//    }
+//}

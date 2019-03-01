@@ -1,15 +1,14 @@
 package commands;
-import AuctionData.*;
+import JoboonjaDB.*;
 import com.google.gson.*;
-import commands.Instruction;
 import itemException.ItemAlreadyExistsException;
+
+import static JoboonjaDB.JDB.accessDataBase;
 
 public class AddProject implements Instruction {
 
-    private MyAuction myAuction;
     private String projectData;
-    public AddProject(MyAuction myAuction, String projectData){
-        this.myAuction = myAuction;
+    public AddProject(String projectData){
         this.projectData = projectData;
     }
 
@@ -19,8 +18,8 @@ public class AddProject implements Instruction {
         for(JsonElement jo : jsonObject){
             Project project = gson.fromJson(jo, Project.class);
             try {
-                this.myAuction.checkForUniqueProjectId(project.getId());
-                this.myAuction.addProject(project);
+                accessDataBase().checkForUniqueProjectId(project.getId());
+                accessDataBase().addProject(project);
             }catch (ItemAlreadyExistsException ie){
                 System.out.println("There is a project with this id.Try again.");
             }

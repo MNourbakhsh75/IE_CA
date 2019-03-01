@@ -1,4 +1,5 @@
-package AuctionData;
+package JoboonjaDB;
+
 
 public class Skills {
     private String name;

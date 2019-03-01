@@ -1,4 +1,5 @@
-package AuctionData;
+package JoboonjaDB;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
