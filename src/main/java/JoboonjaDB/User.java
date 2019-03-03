@@ -85,14 +85,13 @@ public class User {
         }
     }
 
-    public Boolean deleteSkills(String name){
-        Boolean is = false;
+    public void deleteSkills(String name){
+        ArrayList<Skills> newSkills = new ArrayList<>();
         for(Skills s : this.skills){
-            if(s.getName().equals(name)){
-                this.skills.remove(new Skills(s.getName(),s.getPoint()));
-                is = true;
+            if(!s.getName().equals(name)){
+                newSkills.add(s);
             }
         }
-        return is;
+        this.skills = newSkills;
     }
 }

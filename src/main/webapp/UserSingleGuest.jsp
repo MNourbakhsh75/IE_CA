@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
             <c:forEach var="s" items="${requestScope.uskills}">
             <li>
                 <c:out value="${s.name}"/> : <c:out value="${s.point}"/>
-                <form action="/joboonja/endorsskills" method="POST" style="display: ${requestScope.display}">
+                <form action="/joboonja/endorsskills" method="POST">
                     <input hidden name="userId" value="${requestScope.u.id}"/>
                     <input hidden name="sName" value="${s.name}"/>
                     <button>Endorse</button>

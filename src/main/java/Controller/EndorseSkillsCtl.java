@@ -14,6 +14,8 @@ import Services.EndorseUserSkill;
 import Services.GetAllUsers;
 import Services.ShowOneProject;
 import itemException.*;
+
+import static Functions.Functions.endorsedSkill;
 import static Functions.Functions.getTokenizeUrl;
 import itemException.*;
 @WebServlet("/endorsskills")
@@ -23,10 +25,23 @@ public class EndorseSkillsCtl extends HttpServlet {
         String skillName = request.getParameter("sName");
         EndorseUserSkill endorseUserSkill = new EndorseUserSkill();
         String res;
-        if(endorseUserSkill.endorseSkills(userId,skillName)){
-            res = "Done :)";
+        Boolean isFirst = true;
+        if(endorsedSkill.containsKey(userId)){
+            for(String ui : endorsedSkill.values()){
+                if(ui.equals(skillName)){
+                    isFirst = false;
+                }
+            }
+        }
+        if(isFirst){
+            if(endorseUserSkill.endorseSkills(userId,skillName)){
+                endorsedSkill.put(userId,skillName);
+                res = "Done :)";
+            }else{
+                res = "Failed :(";
+            }
         }else{
-            res = "Failed :(";
+            res = "you can't endorse this skill again";
         }
         request.setAttribute("res",res);
         request.getRequestDispatcher("/Response.jsp").forward(request,response);

@@ -10,9 +10,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import static JoboonjaDB.JDB.accessDataBase;
+
 public class Functions {
+
+    public static HashMap<String,String> endorsedSkill = new HashMap<>();
 
     public static void checkForEnoughSkills(ArrayList<Skills> uSkills, ArrayList<Skills> pSkills) throws NotEnoughSkillsException {
         ArrayList<Skills> u = uSkills;

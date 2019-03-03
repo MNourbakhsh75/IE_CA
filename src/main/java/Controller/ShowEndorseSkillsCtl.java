@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import JoboonjaDB.Project;
 import JoboonjaDB.User;
@@ -14,6 +15,8 @@ import Services.EndorseUserSkill;
 import Services.GetAllUsers;
 import Services.ShowOneProject;
 import itemException.*;
+
+import static Functions.Functions.endorsedSkill;
 import static Functions.Functions.getTokenizeUrl;
 import static Services.GetAllSkills.getAllSkills;
 
@@ -31,11 +34,13 @@ public class ShowEndorseSkillsCtl extends HttpServlet {
                 User user = showOneProject.getUserData(token.get(0));
                 request.setAttribute("u",user);
                 request.setAttribute("uskills",user.getSkills());
+                request.setAttribute("ends",endorsedSkill);
                 if(user.getId().equals("1")){
                     ArrayList<String> skills = getAllSkills();
                     request.setAttribute("skills",skills);
                     request.getRequestDispatcher("/UserSingleLoggedIn.jsp").forward(request,response);
                 }else {
+
                     request.setAttribute("display","");
                     request.getRequestDispatcher("/UserSingleGuest.jsp").forward(request,response);
                 }
