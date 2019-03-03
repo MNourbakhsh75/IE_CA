@@ -189,18 +189,15 @@ public class Functions {
         jsonObject.addProperty("jobTitle","برنامه نویس معمولی");
         jsonObject.addProperty("profilePictureURL","");
         jsonObject.addProperty("bio","سیکل");
-        jsonObject1.addProperty("name","PHP");
+        jsonObject1.addProperty("name","Node.js");
         jsonObject1.addProperty("point",5);
         jsonArray.add(jsonObject1);
-        jsonObject2.addProperty("name","Javascript");
+        jsonObject2.addProperty("name","PHP");
         jsonObject2.addProperty("point",4);
         jsonArray.add(jsonObject2);
-        jsonObject3.addProperty("name","C++");
+        jsonObject3.addProperty("name","MySQL");
         jsonObject3.addProperty("point",2);
         jsonArray.add(jsonObject3);
-        jsonObject4.addProperty("name","Java");
-        jsonObject4.addProperty("point",3);
-        jsonArray.add(jsonObject4);
         jsonObject.add("skills",jsonArray);
         return jsonObject.toString();
     }
@@ -210,6 +207,7 @@ public class Functions {
         JsonObject jsonObject2 = new JsonObject();
         JsonObject jsonObject3 = new JsonObject();
         JsonObject jsonObject4 = new JsonObject();
+        JsonObject jsonObject5 = new JsonObject();
         JsonArray jsonArray = new JsonArray();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id","3");
@@ -218,18 +216,21 @@ public class Functions {
         jsonObject.addProperty("jobTitle","برنامه نویس سنگین");
         jsonObject.addProperty("profilePictureURL","");
         jsonObject.addProperty("bio","رفیق بی کلک مادر");
-        jsonObject1.addProperty("name","HTML");
-        jsonObject1.addProperty("point",5);
+        jsonObject1.addProperty("name","React");
+        jsonObject1.addProperty("point",7);
         jsonArray.add(jsonObject1);
         jsonObject2.addProperty("name","Javascript");
-        jsonObject2.addProperty("point",4);
+        jsonObject2.addProperty("point",6);
         jsonArray.add(jsonObject2);
-        jsonObject3.addProperty("name","C++");
-        jsonObject3.addProperty("point",2);
+        jsonObject3.addProperty("name","CSS");
+        jsonObject3.addProperty("point",3);
         jsonArray.add(jsonObject3);
-        jsonObject4.addProperty("name","Java");
-        jsonObject4.addProperty("point",3);
+        jsonObject4.addProperty("name","SQL");
+        jsonObject4.addProperty("point",4);
         jsonArray.add(jsonObject4);
+        jsonObject5.addProperty("name","Node.js");
+        jsonObject5.addProperty("point",5);
+        jsonArray.add(jsonObject5);
         jsonObject.add("skills",jsonArray);
         return jsonObject.toString();
     }

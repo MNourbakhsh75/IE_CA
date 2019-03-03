@@ -10,20 +10,19 @@ import java.util.ArrayList;
 
 import JoboonjaDB.Project;
 import JoboonjaDB.User;
-import Services.EndorseUserSkill;
 import Services.GetAllUsers;
 import Services.ShowOneProject;
 import itemException.*;
 import static Functions.Functions.getTokenizeUrl;
-import itemException.*;
-@WebServlet("/endorsskills")
-public class EndorseSkillsCtl extends HttpServlet {
+import static Services.DeleteUserSkills.deleteUserSkills;
+
+@WebServlet("/deluserskills")
+public class DelUserSkillsCtl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
-        String skillName = request.getParameter("sName");
-        EndorseUserSkill endorseUserSkill = new EndorseUserSkill();
+        String sName = request.getParameter("sName");
         String res;
-        if(endorseUserSkill.endorseSkills(userId,skillName)){
+        if(deleteUserSkills(userId,sName)){
             res = "Done :)";
         }else{
             res = "Failed :(";
@@ -31,6 +30,7 @@ public class EndorseSkillsCtl extends HttpServlet {
         request.setAttribute("res",res);
         request.getRequestDispatcher("/Response.jsp").forward(request,response);
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

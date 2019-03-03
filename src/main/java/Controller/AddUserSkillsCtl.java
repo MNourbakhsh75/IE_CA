@@ -10,27 +10,28 @@ import java.util.ArrayList;
 
 import JoboonjaDB.Project;
 import JoboonjaDB.User;
-import Services.EndorseUserSkill;
 import Services.GetAllUsers;
 import Services.ShowOneProject;
 import itemException.*;
 import static Functions.Functions.getTokenizeUrl;
-import itemException.*;
-@WebServlet("/endorsskills")
-public class EndorseSkillsCtl extends HttpServlet {
+import static Services.AddUserSkills.addUserSkills;
+import static Services.DeleteUserSkills.deleteUserSkills;
+
+@WebServlet("/adduserskills")
+public class AddUserSkillsCtl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
-        String skillName = request.getParameter("sName");
-        EndorseUserSkill endorseUserSkill = new EndorseUserSkill();
+        String sName = request.getParameter("addsname");
         String res;
-        if(endorseUserSkill.endorseSkills(userId,skillName)){
+        if(addUserSkills(userId,sName)){
             res = "Done :)";
         }else{
-            res = "Failed :(";
+            res = "you already have this skill";
         }
         request.setAttribute("res",res);
         request.getRequestDispatcher("/Response.jsp").forward(request,response);
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

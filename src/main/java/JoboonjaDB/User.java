@@ -74,4 +74,25 @@ public class User {
     public void setSkills(ArrayList<Skills> skills) {
         this.skills = skills;
     }
+
+    public void addPointToSkill(String name){
+
+        for(Skills s: this.skills){
+            if(s.getName().equals(name)){
+                Integer point  = s.getPoint();
+                s.setPoint(point+1);
+            }
+        }
+    }
+
+    public Boolean deleteSkills(String name){
+        Boolean is = false;
+        for(Skills s : this.skills){
+            if(s.getName().equals(name)){
+                this.skills.remove(new Skills(s.getName(),s.getPoint()));
+                is = true;
+            }
+        }
+        return is;
+    }
 }
