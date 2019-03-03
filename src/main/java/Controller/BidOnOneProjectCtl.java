@@ -26,20 +26,22 @@ public class BidOnOneProjectCtl extends HttpServlet {
         ArrayList<String> token = getTokenizeUrl(request.getPathInfo());
         ShowOneProject showOneProject = new ShowOneProject();
         String display;
-        try {
-            Project p = showOneProject.getProjectData(token.get(0));
-            if(showOneProject.checkForFirstBiding("1",p)){
-//                System.out.println("yes");
-                display = "";
-            }else{
-                display = "none";
-//                System.out.println("no");
+        if (token.size() != 0){
+            try {
+                Project p = showOneProject.getProjectData(token.get(0));
+                if (showOneProject.checkForFirstBiding("1", p)) {
+                    display = "";
+                } else {
+                    display = "none";
+                }
+                request.setAttribute("display", display);
+                request.setAttribute("project", p);
+                request.getRequestDispatcher("/BidProject.jsp").forward(request, response);
+            } catch (itemNotFoundException | NotEnoughSkillsException e) {
+                response.sendError(404, e.getMessage());
             }
-            request.setAttribute("display",display);
-            request.setAttribute("project",p);
-            request.getRequestDispatcher("/BidProject.jsp").forward(request,response);
-        }catch (itemNotFoundException | NotEnoughSkillsException e){
-            System.out.println(e.getMessage());
+    }else {
+            response.sendError(404, "incorrect url");
         }
 
     }

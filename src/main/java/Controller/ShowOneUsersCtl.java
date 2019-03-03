@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import JoboonjaDB.Project;
+import JoboonjaDB.User;
+import Services.GetAllUsers;
 import Services.ShowOneProject;
 import itemException.*;
 import static Functions.Functions.getTokenizeUrl;
 
-@WebServlet("/project/*")
-public class OneProjectCtl extends HttpServlet {
+@WebServlet("/users/*")
+public class ShowOneUsersCtl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -22,18 +24,17 @@ public class OneProjectCtl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
         ArrayList<String> token = getTokenizeUrl(path);
-        if(token.size() !=0){
+        if(token.size() != 0 ){
             ShowOneProject showOneProject = new ShowOneProject();
             try {
-                Project p = showOneProject.getProjectData(token.get(0));
-                request.setAttribute("project",p);
-                request.getRequestDispatcher("/OneProject.jsp").forward(request,response);
-            }catch (itemNotFoundException | NotEnoughSkillsException ne){
-                response.sendError(403,ne.getMessage());
+                User user = showOneProject.getUserData(token.get(0));
+                request.setAttribute("u",user);
+                request.getRequestDispatcher("/OneUser.jsp").forward(request,response);
+            }catch (itemNotFoundException ie){
+                response.sendError(404, ie.getMessage());
             }
         }else{
             response.sendError(404, "incorrect url");
         }
-
     }
 }

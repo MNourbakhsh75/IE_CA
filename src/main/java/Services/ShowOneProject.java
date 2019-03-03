@@ -33,7 +33,8 @@ public class ShowOneProject {
                     throw new NotEnoughSkillsException(m);
                 }
             }catch (itemNotFoundException ie){
-                throw new itemNotFoundException(ie.getMessage());
+            String ms = "oops...there is no project with this id !!";
+            throw new itemNotFoundException(ms);
             }
             return p;
     }
@@ -42,7 +43,7 @@ public class ShowOneProject {
         try {
             u = accessDataBase().getUserBaseOnId(id);
         }catch (itemNotFoundException ie){
-            String ms = "oops...there is no project with this id !!";
+            String ms = "oops...there is no user with this id !!";
             throw new itemNotFoundException(ms);
         }
         return u;
