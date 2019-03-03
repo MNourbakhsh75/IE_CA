@@ -28,23 +28,29 @@ public class ShowAllProject extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Project> showProjects = new ArrayList<>();
         ArrayList<Project> projects = accessDataBase().getProjects();
+        Integer counter = 0;
+        Integer counter1 = 0;
         try {
             User user = accessDataBase().getUserBaseOnId("1");
             for(Project p : projects){
                 try {
+                    counter1++;
                     checkForEnoughSkills(user.getSkills(),p.getSkills());
                     showProjects.add(p);
-
+                    counter++;
                 } catch (NotEnoughSkillsException e) {
-
+                    if((counter1 == projects.size()) && (counter==0)){
+                        String m = "there is no project with your skills :(";
+                        response.sendError(404, m);
+                    }
                 }
             }
         }catch (itemNotFoundException ie){
-            System.out.println("oops...user not found !!");
+            response.sendError(404, ie.getMessage());
         }
-
         request.setAttribute("showProjects", showProjects);
         request.getRequestDispatcher("/AllProject.jsp").forward(request, response);
+
     }
 }
 

@@ -25,11 +25,9 @@ public class CheckBidAmountCtl extends HttpServlet {
         if(bidAmount >= 0){
             AddBidingUser addBidingUser = new AddBidingUser();
             if(addBidingUser.AddBid("1",pid,bidAmount)) {
-//                System.out.println("addbidT");
                 res = "Done :)";
             }else {
                 res = "bid amount should be less than project budget";
-//                System.out.println("addbidF");
             }
         }else{
             res = "invalid input";
@@ -39,7 +37,6 @@ public class CheckBidAmountCtl extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("kha22!!");
 
 
     }

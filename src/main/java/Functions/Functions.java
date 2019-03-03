@@ -31,13 +31,6 @@ public class Functions {
             throw new NotEnoughSkillsException("NotEnoughSkillsException");
     }
 
-    public static void writeOnOutPut(HttpExchange httpExchange, String data) throws IOException {
-        byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
-        httpExchange.sendResponseHeaders(200,bytes.length);
-        OutputStream outputStream = httpExchange.getResponseBody();
-        outputStream.write(bytes);
-        outputStream.close();
-    }
 
     public static void writeError(HttpExchange httpExchange,String ms) throws IOException{
         String response = "<html>" + "<body>"+ms+"</body>" + "</html>";
@@ -46,72 +39,7 @@ public class Functions {
         os.write(response.getBytes());
         os.close();
     }
-    public static String createAllProjectResponse(StringBuilder stringBuilder, Project p, Integer flag){
-        if(flag == 1) {
-            stringBuilder.append("<!DOCTYPE html>\n" +
-                    "<html lang=\"en\">\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <title>Projects</title>\n" +
-                    "    <style>\n" +
-                    "        table {\n" +
-                    "            text-align: center;\n" +
-                    "            margin: 0 auto;\n" +
-                    "        }\n" +
-                    "        td {\n" +
-                    "            min-width: 300px;\n" +
-                    "            margin: 5px 5px 5px 5px;\n" +
-                    "            text-align: center;\n" +
-                    "        }\n" +
-                    "    </style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "    <table>\n" +
-                    "        <tr>\n" +
-                    "            <th>id</th>\n" +
-                    "            <th>title</th>\n" +
-                    "            <th>budget</th>\n" +
-                    "        </tr>\n");
-        }
-        if(flag == 2){
-            stringBuilder.append("<tr>\n" +
-                    "<td>"+p.getId()+"</td>\n" +
-                    "<td>"+p.getTitle()+"</td>\n" +
-                    "<td>"+p.getBudget()+"</td>\n" +
-                    "</tr>\n");
-        }
-        if(flag == 3){
-            stringBuilder.append("</table>\n" +
-                    "</body>\n" +
-                    "</html>");
-        }
-        return stringBuilder.toString();
-    }
-    public static String createSpecialProjectResponse(StringBuilder stringBuilder,Project project,Integer flag){
-        if(flag == 1){
-            stringBuilder.append("<!DOCTYPE html>\n" +
-                    "<html lang=\"en\">\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <title>Project</title>\n" +
-                    "</head>\n" +
-                    "<body>");
-        }
-        if(flag == 2){
-            stringBuilder.append("<ul>\n" +
-                    "        <li>id: " + project.getId() + "</li>\n" +
-                    "        <li>title: " + project.getTitle() + "</li>\n" +
-                    "        <li>description: " + project.getDescription() + "</li>\n" +
-                    "        <li>imageUrl: <img src=\"" + project.getImageUrl() + "\" style=\"width: 50px; height: 50px;\"></li>\n" +
-                    "        <li>budget: " + project.getBudget() + "</li>\n" +
-                    "    </ul>");
-        }
-        if(flag == 3){
-            stringBuilder.append("</body>\n" +
-                    "</html>");
-        }
-        return stringBuilder.toString();
-    }
+
     public static ArrayList<String> getTokenizeUrl(String url){
         ArrayList<String> token = new ArrayList<>();
         StringTokenizer tokenizer = new StringTokenizer(url, "/");
@@ -120,31 +48,7 @@ public class Functions {
         }
         return token;
     }
-    public static String createSpecialUserResponse(StringBuilder stringBuilder,User u,Integer flag){
-        if(flag == 1) {
-            stringBuilder.append("<!DOCTYPE html>\n" +
-                    "<html lang=\"en\">\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <title>User</title>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "    <ul>");
-        }
-        if(flag == 2){
-            stringBuilder.append("<li>id: 1</li>\n" +
-                    "        <li>first name: "+u.getFirstName()+"</li>\n" +
-                    "        <li>last name: "+u.getLastName()+"</li>\n" +
-                    "        <li>jobTitle: "+u.getJobTitle()+"</li>\n" +
-                    "        <li>bio: "+u.getBio()+"</li>");
-        }
-        if(flag == 3){
-            stringBuilder.append("</ul>\n" +
-                    "</body>\n" +
-                    "</html>");
-        }
-        return stringBuilder.toString();
-    }
+
 
     public static String addStaticUser1(){ //!!!!!
 
