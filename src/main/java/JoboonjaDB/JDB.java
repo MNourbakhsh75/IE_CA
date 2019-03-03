@@ -49,7 +49,7 @@ public class JDB {
                 u = us;
         }
         if(u == null )
-            throw new itemNotFoundException();
+            throw new itemNotFoundException("itemNotFoundException");
         return u;
     }
     public Project getProjectBaseOnId (String id) throws itemNotFoundException{
@@ -59,19 +59,19 @@ public class JDB {
                 p = pj;
         }
         if(p == null)
-            throw new itemNotFoundException();
+            throw new itemNotFoundException("itemNotFoundException");
         return p;
     }
     public void checkForUniqueUser(String id) throws ItemAlreadyExistsException {
         for(User u: this.users){
             if(u.getId().equals(id))
-                throw new ItemAlreadyExistsException();
+                throw new ItemAlreadyExistsException("ItemAlreadyExistsException");
         }
     }
     public void checkForUniqueProjectId(String id) throws ItemAlreadyExistsException{
         for(Project p: this.projects){
             if(p.getId().equals(id))
-                throw new ItemAlreadyExistsException();
+                throw new ItemAlreadyExistsException("ItemAlreadyExistsException");
         }
     }
 }

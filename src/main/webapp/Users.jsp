@@ -1,17 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: Mehrdad
-  Date: 2019-03-02
-  Time: 1:05 AM
+  Date: 2019-03-03
+  Time: 6:30 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Projects</title>
+    <meta charset="UTF-8">
+    <title>Users</title>
     <style>
         table {
             text-align: center;
@@ -25,18 +26,17 @@
     </style>
 </head>
 <body>
-<fmt:requestEncoding value = "ISO-8859-1" />
 <table>
     <tr>
         <th>id</th>
-        <th>title</th>
-        <th>budget</th>
+        <th>name</th>
+        <th>jobTitle</th>
     </tr>
-    <c:forEach var="p" items="${requestScope.showProjects}">
+    <c:forEach var="u" items="${requestScope.users}">
         <tr>
-            <td><c:out value="${p.id}"/></td>
-            <td><c:out value="${p.title}"/></td>
-            <td><c:out value="${p.budget}"/></td>
+            <td><c:out value="${u.id}"/></td>
+            <td><c:out value="${u.firstName} ${u.lastName}"/></td>
+            <td><c:out value="${u.jobTitle}"/></td>
         </tr>
     </c:forEach>
 </table>

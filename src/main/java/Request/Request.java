@@ -15,7 +15,7 @@ public class Request {
         httpURLConnection.setRequestMethod("GET");
         if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                    httpURLConnection.getInputStream()));
+                    httpURLConnection.getInputStream(),"UTF-8"));
             String inputLine;
             StringBuffer stringBuffer = new StringBuffer();
             while ((inputLine = bufferedReader.readLine()) != null) {

@@ -34,6 +34,7 @@ public class ShowAllProject extends HttpServlet {
                 try {
                     checkForEnoughSkills(user.getSkills(),p.getSkills());
                     showProjects.add(p);
+
                 } catch (NotEnoughSkillsException e) {
 
                 }
@@ -41,6 +42,9 @@ public class ShowAllProject extends HttpServlet {
         }catch (itemNotFoundException ie){
             System.out.println("oops...user not found !!");
         }
+
+        request.setAttribute("showProjects", showProjects);
+        request.getRequestDispatcher("/AllProject.jsp").forward(request, response);
     }
 }
 

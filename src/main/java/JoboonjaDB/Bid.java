@@ -7,8 +7,10 @@ public class Bid {
     private Project project;
     private Integer bidAmount;
 
-    public Bid(){
-
+    public Bid(User bidingUser,Project project,Integer bidAmount){
+        this.bidingUser = bidingUser;
+        this.project = project;
+        this.bidAmount = bidAmount;
     }
     public User getBidingUser() {
         return bidingUser;

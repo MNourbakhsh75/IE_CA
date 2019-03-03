@@ -28,7 +28,7 @@ public class Functions {
             }
         }
         if(t.size() != p.size())
-            throw new NotEnoughSkillsException();
+            throw new NotEnoughSkillsException("NotEnoughSkillsException");
     }
 
     public static void writeOnOutPut(HttpExchange httpExchange, String data) throws IOException {
@@ -146,7 +146,7 @@ public class Functions {
         return stringBuilder.toString();
     }
 
-    public static String addStaticUser(){ //!!!!!
+    public static String addStaticUser1(){ //!!!!!
 
         JsonObject jsonObject1 = new JsonObject();
         JsonObject jsonObject2 = new JsonObject();
@@ -160,6 +160,64 @@ public class Functions {
         jsonObject.addProperty("jobTitle","برنامه نویس وب");
         jsonObject.addProperty("profilePictureURL","");
         jsonObject.addProperty("bio","روی سنگ قبرم بنویسید : خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت");
+        jsonObject1.addProperty("name","HTML");
+        jsonObject1.addProperty("point",5);
+        jsonArray.add(jsonObject1);
+        jsonObject2.addProperty("name","Javascript");
+        jsonObject2.addProperty("point",4);
+        jsonArray.add(jsonObject2);
+        jsonObject3.addProperty("name","C++");
+        jsonObject3.addProperty("point",2);
+        jsonArray.add(jsonObject3);
+        jsonObject4.addProperty("name","Java");
+        jsonObject4.addProperty("point",3);
+        jsonArray.add(jsonObject4);
+        jsonObject.add("skills",jsonArray);
+        return jsonObject.toString();
+    }
+    public static String addStaticUser2(){ //!!!!!
+
+        JsonObject jsonObject1 = new JsonObject();
+        JsonObject jsonObject2 = new JsonObject();
+        JsonObject jsonObject3 = new JsonObject();
+        JsonObject jsonObject4 = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id","2");
+        jsonObject.addProperty("firstName","نقی");
+        jsonObject.addProperty("lastName","معمولی");
+        jsonObject.addProperty("jobTitle","برنامه نویس معمولی");
+        jsonObject.addProperty("profilePictureURL","");
+        jsonObject.addProperty("bio","سیکل");
+        jsonObject1.addProperty("name","PHP");
+        jsonObject1.addProperty("point",5);
+        jsonArray.add(jsonObject1);
+        jsonObject2.addProperty("name","Javascript");
+        jsonObject2.addProperty("point",4);
+        jsonArray.add(jsonObject2);
+        jsonObject3.addProperty("name","C++");
+        jsonObject3.addProperty("point",2);
+        jsonArray.add(jsonObject3);
+        jsonObject4.addProperty("name","Java");
+        jsonObject4.addProperty("point",3);
+        jsonArray.add(jsonObject4);
+        jsonObject.add("skills",jsonArray);
+        return jsonObject.toString();
+    }
+    public static String addStaticUser3(){ //!!!!!
+
+        JsonObject jsonObject1 = new JsonObject();
+        JsonObject jsonObject2 = new JsonObject();
+        JsonObject jsonObject3 = new JsonObject();
+        JsonObject jsonObject4 = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id","3");
+        jsonObject.addProperty("firstName","ارسطو");
+        jsonObject.addProperty("lastName","عامل");
+        jsonObject.addProperty("jobTitle","برنامه نویس سنگین");
+        jsonObject.addProperty("profilePictureURL","");
+        jsonObject.addProperty("bio","رفیق بی کلک مادر");
         jsonObject1.addProperty("name","HTML");
         jsonObject1.addProperty("point",5);
         jsonArray.add(jsonObject1);

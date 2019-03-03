@@ -1,6 +1,8 @@
 package JoboonjaDB;
 
 
+import itemException.ItemAlreadyExistsException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,8 +52,9 @@ public class Project {
         return skills;
     }
 
-    public void addBids(ArrayList<Bid> bids) {
-        this.bids = bids;
+    public void addBids(Bid bids) {
+
+        this.bids.add(bids);
     }
 
     public Long getDeadline() {
@@ -88,6 +91,14 @@ public class Project {
 
     public void setWinner(User winner) {
         this.winner = winner;
+    }
+
+    public void checkForUniqueBidingUser(String id) throws ItemAlreadyExistsException {
+        for (Bid b : this.bids){
+            if(b.getBidingUser().getId().equals(id)){
+                throw new ItemAlreadyExistsException("ItemAlreadyExistsException");
+            }
+        }
     }
 
 }
