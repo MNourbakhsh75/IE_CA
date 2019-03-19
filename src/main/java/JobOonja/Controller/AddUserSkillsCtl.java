@@ -17,11 +17,11 @@ import static JobOonja.Services.AddUserSkills.addUserSkills;
 
 @Controller
 public class AddUserSkillsCtl {
-    @RequestMapping(value = "/user/{id}/skill/add",method= RequestMethod.PUT,
+    @RequestMapping(value = "/user/{id}/skill/add",method= RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String addUserSkillHandeler(@PathVariable("id") String uid, @RequestParam("skillName") String sname)  {
-
+        System.out.println("addUserSkill");
         String msg;
         Integer code;
         Boolean success;
