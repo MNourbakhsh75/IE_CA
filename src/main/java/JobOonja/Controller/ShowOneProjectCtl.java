@@ -2,10 +2,9 @@ package JobOonja.Controller;
 
 import JobOonja.itemException.NotEnoughSkillsException;
 import JobOonja.itemException.itemNotFoundException;
-import JobOonja.JoboonjaDB.Project;
+import JobOonja.Entities.Project;
 import JobOonja.Services.ShowOneProject;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

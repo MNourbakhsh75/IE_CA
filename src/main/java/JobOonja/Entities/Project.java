@@ -1,4 +1,4 @@
-package JobOonja.JoboonjaDB;
+package JobOonja.Entities;
 
 
 import JobOonja.itemException.ItemAlreadyExistsException;

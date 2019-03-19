@@ -1,9 +1,9 @@
 package JobOonja.commands;
 import JobOonja.itemException.ItemAlreadyExistsException;
-import JobOonja.JoboonjaDB.User;
+import JobOonja.Entities.User;
 import com.google.gson.*;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class Register implements Instruction {
 

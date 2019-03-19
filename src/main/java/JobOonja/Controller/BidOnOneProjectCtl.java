@@ -1,11 +1,6 @@
 package JobOonja.Controller;
 
-import JobOonja.JoboonjaDB.Project;
 import JobOonja.Services.AddBidingUser;
-import JobOonja.Services.ShowOneProject;
-import JobOonja.itemException.NotEnoughSkillsException;
-import JobOonja.itemException.itemNotFoundException;
-import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

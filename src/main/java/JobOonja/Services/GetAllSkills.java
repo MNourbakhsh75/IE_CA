@@ -2,7 +2,7 @@ package JobOonja.Services;
 
 import java.util.ArrayList;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class GetAllSkills {
 

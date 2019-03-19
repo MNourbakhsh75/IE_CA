@@ -1,10 +1,10 @@
 package JobOonja.Services;
 
-import JobOonja.JoboonjaDB.User;
+import JobOonja.Entities.User;
 
 import java.util.ArrayList;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class GetAllUsers {
 

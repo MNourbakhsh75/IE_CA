@@ -1,4 +1,4 @@
-package JobOonja.JoboonjaDB;
+package JobOonja.Entities;
 
 public class Bid {
     private User bidingUser;

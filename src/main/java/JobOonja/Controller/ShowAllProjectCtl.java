@@ -1,12 +1,11 @@
 package JobOonja.Controller;
 
 
-import JobOonja.JoboonjaDB.Project;
+import JobOonja.Entities.Project;
 import JobOonja.Services.GetAllProject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;

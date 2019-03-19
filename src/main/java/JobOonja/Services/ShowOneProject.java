@@ -1,7 +1,7 @@
 package JobOonja.Services;
 
-import JobOonja.JoboonjaDB.Project;
-import JobOonja.JoboonjaDB.User;
+import JobOonja.Entities.Project;
+import JobOonja.Entities.User;
 import JobOonja.itemException.ItemAlreadyExistsException;
 import JobOonja.itemException.NotEnoughSkillsException;
 import JobOonja.itemException.itemNotFoundException;
@@ -9,7 +9,7 @@ import JobOonja.itemException.itemNotFoundException;
 import java.util.ArrayList;
 
 import static JobOonja.Functions.Functions.*;
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 public class ShowOneProject {
 
     public Project getProjectData(String id) throws NotEnoughSkillsException,itemNotFoundException{

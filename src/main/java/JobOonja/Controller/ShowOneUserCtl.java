@@ -1,18 +1,11 @@
 package JobOonja.Controller;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import JobOonja.itemException.itemNotFoundException;
-import JobOonja.JoboonjaDB.User;
+import JobOonja.Entities.User;
 import JobOonja.Services.ShowOneProject;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

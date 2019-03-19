@@ -1,14 +1,8 @@
 package JobOonja.Controller;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import JobOonja.JoboonjaDB.User;
+import JobOonja.Entities.User;
 import JobOonja.Services.GetAllUsers;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

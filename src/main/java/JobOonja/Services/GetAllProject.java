@@ -1,11 +1,11 @@
 package JobOonja.Services;
 
 import java.util.ArrayList;
-import JobOonja.JoboonjaDB.*;
+import JobOonja.Entities.*;
 import JobOonja.itemException.NotEnoughSkillsException;
 import JobOonja.itemException.itemNotFoundException;
 import static JobOonja.Functions.Functions.checkForEnoughSkills;
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class GetAllProject {
 

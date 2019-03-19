@@ -1,10 +1,10 @@
 package JobOonja.Services;
 
 import JobOonja.itemException.itemNotFoundException;
-import JobOonja.JoboonjaDB.User;
-import JobOonja.JoboonjaDB.Skills;
+import JobOonja.Entities.User;
+import JobOonja.Entities.Skills;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 import java.util.ArrayList;
 public class AddUserSkills {

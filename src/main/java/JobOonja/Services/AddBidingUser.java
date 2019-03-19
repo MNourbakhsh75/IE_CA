@@ -1,9 +1,9 @@
 package JobOonja.Services;
 
 import JobOonja.itemException.itemNotFoundException;
-import JobOonja.JoboonjaDB.*;
+import JobOonja.Entities.*;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class AddBidingUser {
 

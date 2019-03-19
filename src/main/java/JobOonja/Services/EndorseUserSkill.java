@@ -1,22 +1,37 @@
 package JobOonja.Services;
 
+import JobOonja.Entities.Skills;
 import JobOonja.itemException.itemNotFoundException;
-import JobOonja.JoboonjaDB.User;
+import JobOonja.Entities.User;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import java.util.ArrayList;
+
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class EndorseUserSkill {
 
-    public Boolean endorseSkills(String uid,String sName){
-        Boolean end;
-        System.out.println("uid : "+uid + " sname : "+sName);
-        try {
-            User user = accessDataBase().getUserBaseOnId(uid);
-            user.addPointToSkill(sName);
-            end = true;
-        }catch (itemNotFoundException ie){
-            end = false;
+    public void endorseSkills(String uid,String sName) throws itemNotFoundException{
+
+        if(!uid.equals("1")) {
+            try {
+                User user = accessDataBase().getUserBaseOnId(uid);
+                accessDataBase().checkForValidSkill(sName);
+                ArrayList<Skills> uSkills = user.getSkills();
+                Boolean cv = false;
+                for(Skills s : uSkills){
+                    if(s.getName().equals(sName)){
+                        cv = true;
+                    }
+                }
+                if(cv)
+                    user.addPointToSkill(sName);
+                else
+                    throw new itemNotFoundException("user doesn't have this skill");
+            } catch (itemNotFoundException ie) {
+                throw new itemNotFoundException(ie.getMessage());
+            }
+        }else{
+            throw new itemNotFoundException("permission denied");
         }
-        return end;
     }
 }

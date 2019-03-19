@@ -1,9 +1,9 @@
 package JobOonja.commands;
-import JobOonja.JoboonjaDB.*;
+import JobOonja.Entities.*;
 import com.google.gson.*;
 import JobOonja.itemException.ItemAlreadyExistsException;
 
-import static JobOonja.JoboonjaDB.JDB.accessDataBase;
+import static JobOonja.Entities.JDB.accessDataBase;
 
 public class AddProject implements Instruction {
 

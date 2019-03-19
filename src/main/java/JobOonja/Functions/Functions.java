@@ -1,7 +1,7 @@
 package JobOonja.Functions;
 
 import JobOonja.itemException.NotEnoughSkillsException;
-import JobOonja.JoboonjaDB.*;
+import JobOonja.Entities.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 public class Functions {
 
-    public static HashMap<String,String> endorsedSkill = new HashMap<>();
+    public static HashMap<String,ArrayList<String>> endorsedSkill = new HashMap<>();
 
     public static void checkForEnoughSkills(ArrayList<Skills> uSkills, ArrayList<Skills> pSkills) throws NotEnoughSkillsException {
         ArrayList<Skills> u = uSkills;
