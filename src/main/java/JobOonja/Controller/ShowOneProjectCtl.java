@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static JobOonja.Functions.Functions.createJsonResponse;
+
 @Controller
 public class ShowOneProjectCtl {
 
@@ -26,7 +28,8 @@ public class ShowOneProjectCtl {
                 Project p = showOneProject.getProjectData(pid);
                jsonElement = gson.toJsonTree(p);
             }catch (itemNotFoundException | NotEnoughSkillsException ne){
-                System.out.println(ne.getMessage());
+                return createJsonResponse(ne.getMessage(),406,false).toString();
+
             }
     return jsonElement.toString();
     }

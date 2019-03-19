@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static JobOonja.Functions.Functions.createJsonResponse;
+
 
 @Controller
 public class ShowOneUserCtl extends HttpServlet {
@@ -29,7 +31,7 @@ public class ShowOneUserCtl extends HttpServlet {
             User user = showOneProject.getUserData(uid);
             jsonElement = gson.toJsonTree(user);
         }catch (itemNotFoundException ie){
-            System.out.println(ie.getMessage());
+            return createJsonResponse(ie.getMessage(),406,false).toString();
         }
         return jsonElement.toString();
     }

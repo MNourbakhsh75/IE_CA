@@ -3,6 +3,8 @@ package JobOonja.Controller;
 
 import JobOonja.Entities.Project;
 import JobOonja.Services.GetAllProject;
+import JobOonja.itemException.NotEnoughSkillsException;
+import JobOonja.itemException.itemNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
+import static JobOonja.Functions.Functions.createJsonResponse;
+
 @Controller
 public class ShowAllProjectCtl {
 
@@ -22,12 +26,16 @@ public class ShowAllProjectCtl {
     @ResponseBody
     public String allProjectHandler() {
         GetAllProject getAllProject = new GetAllProject();
-        ArrayList<Project> projects = getAllProject.getProjects();
         JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
-        for (Project p : projects){
-            JsonElement jsonElement = gson.toJsonTree(p);
-            jsonArray.add(jsonElement);
+        try {
+            ArrayList<Project> projects = getAllProject.getProjects();
+            for (Project p : projects){
+                JsonElement jsonElement = gson.toJsonTree(p);
+                jsonArray.add(jsonElement);
+            }
+        }catch (NotEnoughSkillsException | itemNotFoundException ie){
+            return createJsonResponse(ie.getMessage(),406,false).toString();
         }
         return jsonArray.toString();
     }

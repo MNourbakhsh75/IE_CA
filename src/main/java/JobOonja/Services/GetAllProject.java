@@ -9,7 +9,7 @@ import static JobOonja.Entities.JDB.accessDataBase;
 
 public class GetAllProject {
 
-    public ArrayList<Project> getProjects() {
+    public ArrayList<Project> getProjects() throws NotEnoughSkillsException,itemNotFoundException {
         ArrayList<Project> showProjects = new ArrayList<>();
         ArrayList<Project> projects = accessDataBase().getProjects();
         Integer counter = 0;
@@ -25,12 +25,12 @@ public class GetAllProject {
                 } catch (NotEnoughSkillsException e) {
                     if((counter1 == projects.size()) && (counter==0)){
                         String m = "there is no project with your skills :(";
-//                        response.sendError(404, m);
+                        throw new NotEnoughSkillsException(m);
                     }
                 }
             }
         }catch (itemNotFoundException ie){
-//            response.sendError(404, ie.getMessage());
+            throw new itemNotFoundException(ie.getMessage());
         }
         return showProjects;
     }
