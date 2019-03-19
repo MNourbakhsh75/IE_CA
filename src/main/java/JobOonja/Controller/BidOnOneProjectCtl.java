@@ -14,28 +14,36 @@ public class BidOnOneProjectCtl {
     @RequestMapping(value = "/project/{id}/bid",method= RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String bidOnProject(@PathVariable("id") String pid, @RequestParam("amount") String amount) {
+    public String bidOnProject(@PathVariable("id") String pid, @RequestParam(value = "amount",required = false) String amount) {
 
-        Integer amountInt = Integer.parseInt(amount);
         String msg = null;
         Integer code;
         Boolean success;
-        if(amountInt >= 0){
-            AddBidingUser addBidingUser = new AddBidingUser();
-            try {
-                addBidingUser.AddBid("1",pid,amountInt);
-                msg = "Done";
-                code = 200;
-                success = true;
-            }catch (itemNotFoundException | ItemAlreadyExistsException ex){
-                msg = ex.getMessage();
+
+        if(amount == null){
+            msg = "invalid parameter";
+            code = 400;
+            success = false;
+        }else {
+            Integer amountInt = Integer.parseInt(amount);
+
+            if (amountInt >= 0) {
+                AddBidingUser addBidingUser = new AddBidingUser();
+                try {
+                    addBidingUser.AddBid("1", pid, amountInt);
+                    msg = "Done";
+                    code = 200;
+                    success = true;
+                } catch (itemNotFoundException | ItemAlreadyExistsException ex) {
+                    msg = ex.getMessage();
+                    code = 406;
+                    success = false;
+                }
+            } else {
+                msg = "invalid input";
                 code = 406;
                 success = false;
             }
-        }else{
-            msg = "invalid input";
-            code = 406;
-            success = false;
         }
         return createJsonResponse(msg,code,success).toString();
     }

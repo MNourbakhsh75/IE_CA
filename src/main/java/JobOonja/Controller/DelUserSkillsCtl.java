@@ -19,22 +19,28 @@ public class DelUserSkillsCtl {
     @RequestMapping(value = "/user/{id}/skill/delete",method= RequestMethod.DELETE,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String delUserSkillHandeler(@PathVariable("id") String uid, @RequestParam("skillName") String sname) {
+    public String delUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname) {
         String msg;
         Boolean success;
         Integer code;
-        try {
-            deleteUserSkills(uid,sname);
-            msg = "Done :)";
-            code = 200;
-            success = true;
-        }catch (itemNotFoundException ie){
-            msg = ie.getMessage();
-            if(msg.equals("permission denied"))
-                code = 403;
-            else
-                code = 406;
+        if(sname == null){
+            msg = "invalid parameter";
+            code = 400;
             success = false;
+        }else {
+            try {
+                deleteUserSkills(uid, sname);
+                msg = "Done :)";
+                code = 200;
+                success = true;
+            } catch (itemNotFoundException ie) {
+                msg = ie.getMessage();
+                if (msg.equals("permission denied"))
+                    code = 403;
+                else
+                    code = 406;
+                success = false;
+            }
         }
         return createJsonResponse(msg,code,success).toString();
     }
