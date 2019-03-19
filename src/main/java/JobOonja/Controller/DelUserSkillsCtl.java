@@ -1,5 +1,9 @@
 package JobOonja.Controller;
 
+import JobOonja.itemException.itemNotFoundException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,24 +11,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static JobOonja.Functions.Functions.createJsonResponse;
 import static JobOonja.Services.DeleteUserSkills.deleteUserSkills;
 
-@WebServlet("/deluserskills")
-public class DelUserSkillsCtl extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userId = request.getParameter("userId");
-        String sName = request.getParameter("sName");
-        String res;
-        if(deleteUserSkills(userId,sName)){
-            res = "Done :)";
-        }else{
-            res = "Failed :(";
+@Controller
+public class DelUserSkillsCtl {
+    @RequestMapping(value = "/user/{id}/skill/delete",method= RequestMethod.DELETE,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String delUserSkillHandeler(@PathVariable("id") String uid, @RequestParam("skillName") String sname) {
+        String msg;
+        Boolean success;
+        Integer code;
+        try {
+            deleteUserSkills(uid,sname);
+            msg = "Done :)";
+            code = 200;
+            success = true;
+        }catch (itemNotFoundException ie){
+            msg = ie.getMessage();
+            if(msg.equals("permission denied"))
+                code = 403;
+            else
+                code = 406;
+            success = false;
         }
-        request.setAttribute("res",res);
-        request.getRequestDispatcher("/Response.jsp").forward(request,response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        return createJsonResponse(msg,code,success).toString();
     }
 }

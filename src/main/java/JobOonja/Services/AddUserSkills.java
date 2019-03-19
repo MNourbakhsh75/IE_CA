@@ -9,26 +9,28 @@ import static JobOonja.JoboonjaDB.JDB.accessDataBase;
 import java.util.ArrayList;
 public class AddUserSkills {
 
-    public static Boolean addUserSkills(String id,String name){
-        Boolean sc = false;
-
-        try {
-            User user = accessDataBase().getUserBaseOnId(id);
-            ArrayList<Skills> us = user.getSkills();
-            Boolean cv = true;
-            for(Skills s : us){
-                if(s.getName().equals(name)){
-                    cv = false;
+    public static void addUserSkills(String id,String name) throws itemNotFoundException {
+        if (id.equals("1")){
+            try {
+                User user = accessDataBase().getUserBaseOnId(id);
+                accessDataBase().checkForValidSkill(name);
+                ArrayList<Skills> us = user.getSkills();
+                Boolean cv = true;
+                for (Skills s : us) {
+                    if (s.getName().equals(name)) {
+                        cv = false;
+                    }
                 }
+                if (cv) {
+                    user.addSkill(name, 0);
+                } else {
+                    throw new itemNotFoundException("user already have this skill");
+                }
+            } catch (itemNotFoundException i) {
+                throw new itemNotFoundException(i.getMessage());
             }
-            if(cv) {
-                user.addSkill(name, 0);
-                sc = true;
-            }
-        }catch (itemNotFoundException i){
-            sc = false;
+    }else{
+            throw new itemNotFoundException("permission denied");
         }
-
-        return sc;
     }
 }

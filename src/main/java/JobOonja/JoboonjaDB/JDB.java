@@ -51,7 +51,7 @@ public class JDB {
                 u = us;
         }
         if(u == null )
-            throw new itemNotFoundException("itemNotFoundException");
+            throw new itemNotFoundException("user not found");
         return u;
     }
     public Project getProjectBaseOnId (String id) throws itemNotFoundException{
@@ -75,5 +75,10 @@ public class JDB {
             if(p.getId().equals(id))
                 throw new ItemAlreadyExistsException("ItemAlreadyExistsException");
         }
+    }
+    public void checkForValidSkill(String name) throws itemNotFoundException {
+
+        if(!this.allSkills.contains(name))
+            throw new itemNotFoundException("invalid skill name");
     }
 }

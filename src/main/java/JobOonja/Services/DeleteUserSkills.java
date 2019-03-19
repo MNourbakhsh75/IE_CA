@@ -1,21 +1,36 @@
 package JobOonja.Services;
 
+import JobOonja.JoboonjaDB.Skills;
 import JobOonja.itemException.itemNotFoundException;
 import JobOonja.JoboonjaDB.User;
+
+import java.util.ArrayList;
 
 import static JobOonja.JoboonjaDB.JDB.accessDataBase;
 
 public class DeleteUserSkills {
 
-    public static Boolean deleteUserSkills(String uid,String name){
-        Boolean success;
-        try {
-            User user = accessDataBase().getUserBaseOnId(uid);
-            user.deleteSkills(name);
-            success = true;
-        }catch (itemNotFoundException ie){
-            success = false;
+    public static void deleteUserSkills(String uid,String name) throws itemNotFoundException {
+        if (uid.equals("1")) {
+            try {
+                User user = accessDataBase().getUserBaseOnId(uid);
+                accessDataBase().checkForValidSkill(name);
+                ArrayList<Skills> uSkills = user.getSkills();
+                Boolean cv = false;
+                for(Skills s : uSkills){
+                    if(s.getName().equals(name)){
+                        cv = true;
+                    }
+                }
+                if(cv)
+                    user.deleteSkills(name);
+                else
+                    throw new itemNotFoundException("user doesn't have this skill");
+            } catch (itemNotFoundException ie) {
+                throw new itemNotFoundException(ie.getMessage());
+            }
+        }else{
+            throw new itemNotFoundException("permission denied");
         }
-        return success;
     }
 }

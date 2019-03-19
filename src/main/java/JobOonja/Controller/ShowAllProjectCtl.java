@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 
 @Controller
-public class ShowAllProject {
+public class ShowAllProjectCtl {
 
     @RequestMapping(value = "/project",method=RequestMethod.GET,
     produces = "application/json;charset=UTF-8")

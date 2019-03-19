@@ -1,47 +1,45 @@
 package JobOonja.Controller;
 
 import JobOonja.JoboonjaDB.Project;
+import JobOonja.Services.AddBidingUser;
 import JobOonja.Services.ShowOneProject;
 import JobOonja.itemException.NotEnoughSkillsException;
 import JobOonja.itemException.itemNotFoundException;
+import com.google.gson.JsonObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
+import static JobOonja.Functions.Functions.createJsonResponse;
 
-import static JobOonja.Functions.Functions.getTokenizeUrl;
 
-@WebServlet("/bidproject/*")
-public class BidOnOneProjectCtl extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@Controller
+public class BidOnOneProjectCtl {
+    @RequestMapping(value = "/project/{id}/bid",method= RequestMethod.POST,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String bidOnProject(@PathVariable("id") String pid, @RequestParam("amount") String amount) {
 
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<String> token = getTokenizeUrl(request.getPathInfo());
-        ShowOneProject showOneProject = new ShowOneProject();
-        String display;
-        if (token.size() != 0){
-            try {
-                Project p = showOneProject.getProjectData(token.get(0));
-                if (showOneProject.checkForFirstBiding("1", p)) {
-                    display = "";
-                } else {
-                    display = "none";
-                }
-                request.setAttribute("display", display);
-                request.setAttribute("project", p);
-                request.getRequestDispatcher("/BidProject.jsp").forward(request, response);
-            } catch (itemNotFoundException | NotEnoughSkillsException e) {
-                response.sendError(404, e.getMessage());
+        System.out.println("amount : "+amount);
+        Integer amountInt = Integer.parseInt(amount);
+        String msg = null;
+        Integer code;
+        Boolean success;
+        if(amountInt >= 0){
+            AddBidingUser addBidingUser = new AddBidingUser();
+            if(addBidingUser.AddBid("1",pid,amountInt)) {
+                msg = "Done";
+                code = 200;
+                success = true;
+            }else {
+                msg = "bid amount should be less than project budget";
+                code = 406;
+                success = false;
             }
-    }else {
-            response.sendError(404, "incorrect url");
+        }else{
+            msg = "invalid input";
+            code = 406;
+            success = false;
         }
-
+        return createJsonResponse(msg,code,success).toString();
     }
 }

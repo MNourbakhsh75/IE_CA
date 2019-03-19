@@ -51,6 +51,14 @@ public class Functions {
         return token;
     }
 
+    public static JsonObject createJsonResponse(String msg,Integer code,Boolean success){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("msg",msg);
+        jsonObject.addProperty("code",code);
+        jsonObject.addProperty("success",success);
+        return jsonObject;
+    }
+
 
     public static String addStaticUser1(){ //!!!!!
 

@@ -2,12 +2,12 @@ package JobOonja.JoboonjaDB;
 
 public class Bid {
     private User bidingUser;
-    private Project project;
+//    private Project project;
     private Integer bidAmount;
 
-    public Bid(User bidingUser,Project project,Integer bidAmount){
+    public Bid(User bidingUser,Integer bidAmount){
         this.bidingUser = bidingUser;
-        this.project = project;
+//        this.project = project;
         this.bidAmount = bidAmount;
     }
     public User getBidingUser() {
@@ -18,9 +18,9 @@ public class Bid {
         return bidAmount;
     }
 
-    public Project getProject() {
-        return project;
-    }
+//    public Project getProject() {
+//        return project;
+//    }
 
     public void setBidAmount(Integer bidAmount) {
         this.bidAmount = bidAmount;
@@ -30,7 +30,7 @@ public class Bid {
         this.bidingUser = bidingUser;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
+//    public void setProject(Project project) {
+//        this.project = project;
+//    }
 }

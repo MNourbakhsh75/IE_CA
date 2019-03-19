@@ -13,7 +13,7 @@ public class AddBidingUser {
             Project project = accessDataBase().getProjectBaseOnId(pid);
             User user = accessDataBase().getUserBaseOnId(uid);
             if(project.getBudget() >= bidamount){
-                Bid bid = new Bid(user,project,bidamount);
+                Bid bid = new Bid(user,bidamount);
                 project.addBids(bid);
                 success = true;
             }else{
