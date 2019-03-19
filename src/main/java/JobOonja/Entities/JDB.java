@@ -61,7 +61,7 @@ public class JDB {
                 p = pj;
         }
         if(p == null)
-            throw new itemNotFoundException("itemNotFoundException");
+            throw new itemNotFoundException("project not found");
         return p;
     }
     public void checkForUniqueUser(String id) throws ItemAlreadyExistsException {

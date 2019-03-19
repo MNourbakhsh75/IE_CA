@@ -95,7 +95,7 @@ public class Project {
     public void checkForUniqueBidingUser(String id) throws ItemAlreadyExistsException {
         for (Bid b : this.bids){
             if(b.getBidingUser().getId().equals(id)){
-                throw new ItemAlreadyExistsException("ItemAlreadyExistsException");
+                throw new ItemAlreadyExistsException("this user already bid on this project");
             }
         }
     }

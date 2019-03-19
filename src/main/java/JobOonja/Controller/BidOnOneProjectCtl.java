@@ -1,6 +1,8 @@
 package JobOonja.Controller;
 
 import JobOonja.Services.AddBidingUser;
+import JobOonja.itemException.ItemAlreadyExistsException;
+import JobOonja.itemException.itemNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,19 +16,19 @@ public class BidOnOneProjectCtl {
     @ResponseBody
     public String bidOnProject(@PathVariable("id") String pid, @RequestParam("amount") String amount) {
 
-        System.out.println("amount : "+amount);
         Integer amountInt = Integer.parseInt(amount);
         String msg = null;
         Integer code;
         Boolean success;
         if(amountInt >= 0){
             AddBidingUser addBidingUser = new AddBidingUser();
-            if(addBidingUser.AddBid("1",pid,amountInt)) {
+            try {
+                addBidingUser.AddBid("1",pid,amountInt);
                 msg = "Done";
                 code = 200;
                 success = true;
-            }else {
-                msg = "bid amount should be less than project budget";
+            }catch (itemNotFoundException | ItemAlreadyExistsException ex){
+                msg = ex.getMessage();
                 code = 406;
                 success = false;
             }
