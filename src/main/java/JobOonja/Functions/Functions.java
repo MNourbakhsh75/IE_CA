@@ -59,6 +59,19 @@ public class Functions {
         return jsonObject;
     }
 
+    public static JsonObject createJsonResponseForEndorse(String msg,Integer code,Boolean success,ArrayList<String> en){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        jsonObject.addProperty("msg",msg);
+        jsonObject.addProperty("code",code);
+        jsonObject.addProperty("success",success);
+        for (String s: en){
+            jsonArray.add(s);
+        }
+        jsonObject.add("endorsedSkill",jsonArray);
+        return jsonObject;
+    }
+
 
     public static String addStaticUser1(){ //!!!!!
 
@@ -69,11 +82,11 @@ public class Functions {
         JsonArray jsonArray = new JsonArray();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id","1");
-        jsonObject.addProperty("firstName","علی");
-        jsonObject.addProperty("lastName","شریف زاده");
+        jsonObject.addProperty("firstName","ژان");
+        jsonObject.addProperty("lastName","ژاک روسو");
         jsonObject.addProperty("jobTitle","برنامه نویس وب");
-        jsonObject.addProperty("profilePictureURL","");
-        jsonObject.addProperty("bio","روی سنگ قبرم بنویسید : خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت");
+        jsonObject.addProperty("profilePictureURL","https://upload.wikimedia.org/wikipedia/en/4/4c/Maurice_Quentin_de_La_Tour_-_Portrait_of_Jean-Jacques_Rousseau_-_adjusted.jpg");
+        jsonObject.addProperty("bio","آقا ژان ژاک روسو می\u200Cگه عید بسیار زیباست😊😊");
         jsonObject1.addProperty("name","HTML");
         jsonObject1.addProperty("point",5);
         jsonArray.add(jsonObject1);
@@ -101,7 +114,7 @@ public class Functions {
         jsonObject.addProperty("firstName","نقی");
         jsonObject.addProperty("lastName","معمولی");
         jsonObject.addProperty("jobTitle","برنامه نویس معمولی");
-        jsonObject.addProperty("profilePictureURL","");
+        jsonObject.addProperty("profilePictureURL","https://kandoonews.com/images/news/630/thumbs/630.jpg");
         jsonObject.addProperty("bio","سیکل");
         jsonObject1.addProperty("name","Node.js");
         jsonObject1.addProperty("point",5);
@@ -125,11 +138,11 @@ public class Functions {
         JsonArray jsonArray = new JsonArray();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id","3");
-        jsonObject.addProperty("firstName","ارسطو");
-        jsonObject.addProperty("lastName","عامل");
-        jsonObject.addProperty("jobTitle","برنامه نویس سنگین");
-        jsonObject.addProperty("profilePictureURL","");
-        jsonObject.addProperty("bio","رفیق بی کلک مادر");
+        jsonObject.addProperty("firstName","فامیل");
+        jsonObject.addProperty("lastName","دور");
+        jsonObject.addProperty("jobTitle","برنامه نویس دوری");
+        jsonObject.addProperty("profilePictureURL","https://images.chesscomfiles.com/uploads/v1/user/20102042.6349e34c.161x161o.72c98194bbfc.jpeg");
+        jsonObject.addProperty("bio","که با این در اگر در بند در مانند درمانند");
         jsonObject1.addProperty("name","React");
         jsonObject1.addProperty("point",7);
         jsonArray.add(jsonObject1);

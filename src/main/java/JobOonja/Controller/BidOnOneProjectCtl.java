@@ -31,7 +31,7 @@ public class BidOnOneProjectCtl {
                 AddBidingUser addBidingUser = new AddBidingUser();
                 try {
                     addBidingUser.AddBid("1", pid, amountInt);
-                    msg = "Done";
+                    msg = "عملیات موفق آمیز بود!";
                     code = 200;
                     success = true;
                 } catch (itemNotFoundException | ItemAlreadyExistsException ex) {

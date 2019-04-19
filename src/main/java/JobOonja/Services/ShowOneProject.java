@@ -22,11 +22,11 @@ public class ShowOneProject {
                     checkForEnoughSkills(user.getSkills(),project.getSkills());
                     p = project;
                 }catch (NotEnoughSkillsException e){
-                    String m = "you dont have enough skills to see this project :(";
+                    String m = "برای دیدن این پروژه مهارت کافی ندارید";
                     throw new NotEnoughSkillsException(m);
                 }
             }catch (itemNotFoundException ie){
-            String ms = "oops...there is no project with this id !!";
+            String ms = "پروژه ای با این id وجود ندارد!";
             throw new itemNotFoundException(ms);
             }
             return p;
@@ -36,7 +36,7 @@ public class ShowOneProject {
         try {
             u = accessDataBase().getUserBaseOnId(id);
         }catch (itemNotFoundException ie){
-            String ms = "oops...there is no user with this id !!";
+            String ms = "پروژه ای با این id وجود ندارد!";
             throw new itemNotFoundException(ms);
         }
         return u;

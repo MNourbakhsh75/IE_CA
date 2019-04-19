@@ -24,7 +24,7 @@ public class AddUserSkills {
                 if (cv) {
                     user.addSkill(name, 0);
                 } else {
-                    throw new itemNotFoundException("user already have this skill");
+                    throw new itemNotFoundException("این مهارت وجود دارد");
                 }
             } catch (itemNotFoundException i) {
                 throw new itemNotFoundException(i.getMessage());

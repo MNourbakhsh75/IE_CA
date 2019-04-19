@@ -24,7 +24,7 @@ public class GetAllProject {
                     counter++;
                 } catch (NotEnoughSkillsException e) {
                     if((counter1 == projects.size()) && (counter==0)){
-                        String m = "there is no project with your skills :(";
+                        String m = "پروژه ای با مهارت های شما وجود ندارد";
                         throw new NotEnoughSkillsException(m);
                     }
                 }

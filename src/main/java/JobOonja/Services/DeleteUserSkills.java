@@ -25,7 +25,7 @@ public class DeleteUserSkills {
                 if(cv)
                     user.deleteSkills(name);
                 else
-                    throw new itemNotFoundException("user doesn't have this skill");
+                    throw new itemNotFoundException("کاربر این مهارت را ندارد");
             } catch (itemNotFoundException ie) {
                 throw new itemNotFoundException(ie.getMessage());
             }

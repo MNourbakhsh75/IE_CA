@@ -22,7 +22,7 @@ public class AddBidingUser {
                     throw new ItemAlreadyExistsException(ie.getMessage());
                 }
             }else{
-                throw new itemNotFoundException("bid amount should be less than project budget");
+                throw new itemNotFoundException("مقدار پیشنهادی باید کمتر از بودجه پروژه باشد");
             }
         }catch (itemNotFoundException ex){
             throw new itemNotFoundException(ex.getMessage());

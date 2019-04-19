@@ -79,6 +79,6 @@ public class JDB {
     public void checkForValidSkill(String name) throws itemNotFoundException {
 
         if(!this.allSkills.contains(name))
-            throw new itemNotFoundException("invalid skill name");
+            throw new itemNotFoundException("نام مهارت نامعتبر است");
     }
 }

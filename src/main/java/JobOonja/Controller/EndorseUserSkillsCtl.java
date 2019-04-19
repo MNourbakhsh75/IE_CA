@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-import static JobOonja.Functions.Functions.createJsonResponse;
-import static JobOonja.Functions.Functions.endorsedSkill;
+import static JobOonja.Functions.Functions.*;
 
 @Controller
 public class EndorseUserSkillsCtl {
 
-    @RequestMapping(value = "/user/{id}/skill/endorse",method= RequestMethod.PUT,
+    @RequestMapping(value = "/user/{id}/skill",method= RequestMethod.PUT,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String endorseSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname) {
@@ -23,6 +22,7 @@ public class EndorseUserSkillsCtl {
         String res;
         Boolean success;
         Integer code;
+//        System.out.println(sname);
         if(sname == null){
             res = "invalid parameter";
             code = 400;
@@ -48,9 +48,11 @@ public class EndorseUserSkillsCtl {
                         endList2.add(sname);
                         endorsedSkill.put(uid, endList2);
                     }
-                    res = "Done :)";
+                    res = "عملیات موفق آمیز بود!";
                     code = 200;
                     success = true;
+                    ArrayList <String> userEndorsedSkill = endorsedSkill.get(uid);
+                    return createJsonResponseForEndorse(res,code,success,userEndorsedSkill).toString();
                 } catch (itemNotFoundException ie) {
                     res = ie.getMessage();
                     if (res.equals("permission denied"))
@@ -60,9 +62,9 @@ public class EndorseUserSkillsCtl {
                     success = false;
                 }
             } else {
-                res = "you can't endorse this skill again";
+                res = "شما قبلا این مهارت را تایید کرده اید.";
                 code = 406;
-                success = true;
+                success = false;
             }
         }
         return createJsonResponse(res,code,success).toString();

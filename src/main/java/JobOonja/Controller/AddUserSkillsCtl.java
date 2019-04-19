@@ -11,7 +11,7 @@ import static JobOonja.Services.AddUserSkills.addUserSkills;
 
 @Controller
 public class AddUserSkillsCtl {
-    @RequestMapping(value = "/user/{id}/skill/add",method= RequestMethod.POST,
+    @RequestMapping(value = "/user/{id}/skill",method= RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String addUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname)  {
@@ -19,13 +19,13 @@ public class AddUserSkillsCtl {
         Integer code;
         Boolean success;
         if(sname == null){
-            msg = "invalid parameter";
+            msg = "داده ی نامعتبر";
             code = 400;
             success = false;
         }else {
             try {
                 addUserSkills(uid, sname);
-                msg = "Done :)";
+                msg = "عملیات موفق آمیز بود!";
                 code = 200;
                 success = true;
             } catch (itemNotFoundException ie) {

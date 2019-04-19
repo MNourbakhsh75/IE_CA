@@ -16,7 +16,7 @@ import static JobOonja.Services.DeleteUserSkills.deleteUserSkills;
 
 @Controller
 public class DelUserSkillsCtl {
-    @RequestMapping(value = "/user/{id}/skill/delete",method= RequestMethod.DELETE,
+    @RequestMapping(value = "/user/{id}/skill",method= RequestMethod.DELETE,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String delUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname) {
@@ -30,7 +30,7 @@ public class DelUserSkillsCtl {
         }else {
             try {
                 deleteUserSkills(uid, sname);
-                msg = "Done :)";
+                msg = "عملیات موفق آمیز بود!";
                 code = 200;
                 success = true;
             } catch (itemNotFoundException ie) {

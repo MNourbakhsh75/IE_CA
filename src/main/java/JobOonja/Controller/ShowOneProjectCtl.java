@@ -26,7 +26,7 @@ public class ShowOneProjectCtl {
             JsonElement jsonElement = null;
             try {
                 Project p = showOneProject.getProjectData(pid);
-               jsonElement = gson.toJsonTree(p);
+                jsonElement = gson.toJsonTree(p);
             }catch (itemNotFoundException | NotEnoughSkillsException ne){
                 return createJsonResponse(ne.getMessage(),406,false).toString();
 
