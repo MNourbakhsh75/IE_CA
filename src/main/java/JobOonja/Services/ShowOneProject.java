@@ -6,8 +6,10 @@ import JobOonja.itemException.ItemAlreadyExistsException;
 import JobOonja.itemException.NotEnoughSkillsException;
 import JobOonja.itemException.itemNotFoundException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static JobOonja.DataLayer.DataMapper.UserMapper.getSingleUserFromDB;
 import static JobOonja.Functions.Functions.*;
 import static JobOonja.Entities.JDB.accessDataBase;
 public class ShowOneProject {
@@ -34,9 +36,10 @@ public class ShowOneProject {
     public User getUserData(String id) throws itemNotFoundException{
         User u = null;
         try {
-            u = accessDataBase().getUserBaseOnId(id);
-        }catch (itemNotFoundException ie){
-            String ms = "پروژه ای با این id وجود ندارد!";
+            u = getSingleUserFromDB(id);
+        }catch (SQLException ie){
+            System.out.println(ie);
+            String ms = "کاربری ای با این id وجود ندارد!";
             throw new itemNotFoundException(ms);
         }
         return u;

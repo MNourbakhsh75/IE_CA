@@ -1,6 +1,8 @@
 package JobOonja.Services;
 
+import JobOonja.DataLayer.DataMapper.ProjectMapper;
 import JobOonja.DataLayer.DataMapper.SkillsMapper;
+import JobOonja.Entities.Project;
 import JobOonja.Request.Request;
 import JobOonja.commands.*;
 import JobOonja.commands.Instruction;
@@ -9,6 +11,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import static JobOonja.DataLayer.DataMapper.ProjectMapper.insertProjecsToDB;
+import static JobOonja.DataLayer.DataMapper.ProjectMapper.insertProjectSkillToDB;
 
 public class GetAllDataFromServer {
     private Request request = new Request();
@@ -20,10 +25,15 @@ public class GetAllDataFromServer {
     public void getAllProjectsMethod() {
         try {
             String getProjects = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
-            instruction = new AddProject(getProjects);
-            instruction.run();
-        } catch (IOException e1) {
-            System.out.println("request failed.");
+            AddProject addProject = new AddProject(getProjects);
+            ArrayList<Project> projects = addProject.run();
+            ProjectMapper projectMapper = new ProjectMapper();
+            insertProjecsToDB(projects);
+            for(Project p : projects){
+                insertProjectSkillToDB(p);
+            }
+        } catch (IOException | SQLException e1) {
+            System.out.println(e1);
         }
     }
     public void getAllSkillsMethod(){

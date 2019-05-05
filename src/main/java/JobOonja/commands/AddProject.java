@@ -3,26 +3,31 @@ import JobOonja.Entities.*;
 import com.google.gson.*;
 import JobOonja.itemException.ItemAlreadyExistsException;
 
+import java.util.ArrayList;
+
 import static JobOonja.Entities.JDB.accessDataBase;
 
-public class AddProject implements Instruction {
+public class AddProject {
 
     private String projectData;
     public AddProject(String projectData){
         this.projectData = projectData;
     }
 
-    public void run() {
+    public ArrayList<Project> run() {
         Gson gson = new Gson();
         JsonArray jsonObject = gson.fromJson(this.projectData,JsonArray.class);
+        ArrayList<Project> projects = new ArrayList<>();
         for(JsonElement jo : jsonObject){
             Project project = gson.fromJson(jo, Project.class);
-            try {
-                accessDataBase().checkForUniqueProjectId(project.getId());
-                accessDataBase().addProject(project);
-            }catch (ItemAlreadyExistsException ie){
-                System.out.println("There is a project with this id.Try again.");
-            }
+            projects.add(project);
+//            try {
+//                accessDataBase().checkForUniqueProjectId(project.getId());
+//                accessDataBase().addProject(project);
+//            }catch (ItemAlreadyExistsException ie){
+//                System.out.println("There is a project with this id.Try again.");
+//            }
         }
+        return projects;
     }
 }

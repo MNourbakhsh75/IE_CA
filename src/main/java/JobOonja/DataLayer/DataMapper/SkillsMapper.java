@@ -11,7 +11,7 @@ public class SkillsMapper {
     public SkillsMapper() throws SQLException {
         Connection con = ConnectionPool.getConnection();
         Statement st = con.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(id TEXT PRIMARY KEY, name TEXT);";
+        String sql = "CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name TEXT PRIMARY KEY);";
         st.executeUpdate(sql);
         st.close();
         con.close();
@@ -21,11 +21,10 @@ public class SkillsMapper {
         System.out.println("insert");
         Connection connection = ConnectionPool.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement(String.format("insert into skill values(?, ?)", "id", "name"));
+            PreparedStatement statement = connection.prepareStatement(String.format("insert into skill values(?)", "name"));
             for(int i = 1; i <= skills.size(); i++){
 //                System.out.println(skills.get(i-1));
-                statement.setString(1, Integer.toString(i));
-                statement.setString(2, skills.get(i-1));
+                statement.setString(1, skills.get(i-1));
                 statement.addBatch();
             }
             connection.setAutoCommit(false);

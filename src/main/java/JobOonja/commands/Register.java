@@ -5,7 +5,7 @@ import com.google.gson.*;
 
 import static JobOonja.Entities.JDB.accessDataBase;
 
-public class Register implements Instruction {
+public class Register {
 
 
     private String userData;
@@ -13,14 +13,15 @@ public class Register implements Instruction {
         this.userData = userData;
     }
 
-    public void run() {
+    public User run() {
         Gson g = new Gson();
         User user = g.fromJson(this.userData, User.class);
-        try {
-            accessDataBase().checkForUniqueUser(user.getId());
-            accessDataBase().addUser(user);
-        }catch (ItemAlreadyExistsException ie){
-            System.out.println("There is an user with this id.Try again.");
-        }
+//        try {
+//            accessDataBase().checkForUniqueUser(user.getId());
+//            accessDataBase().addUser(user);
+//        }catch (ItemAlreadyExistsException ie){
+//            System.out.println("There is an user with this id.Try again.");
+//        }
+        return user;
     }
 }
