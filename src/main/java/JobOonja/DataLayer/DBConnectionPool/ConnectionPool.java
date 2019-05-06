@@ -20,6 +20,7 @@ public class ConnectionPool {
         ds.setMinIdle(5);
         ds.setMaxIdle(10);
         ds.setMaxOpenPreparedStatements(100);
+
     }
 
     public static Connection getConnection() throws SQLException {

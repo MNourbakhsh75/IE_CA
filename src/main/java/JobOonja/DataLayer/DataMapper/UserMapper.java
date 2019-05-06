@@ -5,6 +5,7 @@ import JobOonja.Entities.Skills;
 import JobOonja.Entities.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserMapper {
 
@@ -61,8 +62,56 @@ public class UserMapper {
         stat.setString(1,uid);
         ResultSet rs2 = stat.executeQuery();
         user = convertResultSetToObject(rs,rs2);
+        stat.close();
+        connection.close();
         return user;
     }
+
+    public static ArrayList<User> getAllUserFromDB() throws SQLException {
+        ArrayList<User> users = new ArrayList<>();
+        Connection connection = ConnectionPool.getConnection();
+        Statement stat = connection.createStatement();
+        ResultSet rs = stat.executeQuery(String.format("SELECT * FROM user"));
+        System.out.println(rs.getString("firstName"));
+        while (rs.next()){
+            PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userId = ?"));
+            statement.setString(1,rs.getString("id"));
+            ResultSet rs2 = statement.executeQuery();
+            User user = convertResultSetToObject(rs,rs2);
+            users.add(user);
+        }
+        stat.close();
+        connection.close();
+        return users;
+    }
+
+    public static void addNewSkillToUser(String uid,String name) throws SQLException{
+
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement statement = connection.prepareStatement(String.format("insert into userSkill values(?,?,?)", "userId", "skillName","point"));
+        statement.setString(1,uid);
+        statement.setString(2,name);
+        statement.setInt(3,0);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    public static void deleteUserSkill(String uid,String name) throws SQLException{
+
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement statement = connection.prepareStatement(String.format("DELETE FROM userSkill  WHERE userId = ? AND skillName = ?"));
+        statement.setString(1,uid);
+        statement.setString(2,name);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+
+    }
+
+    //public static User searchUser(String name) throws SQLException {
+
+    //}
 
     private static User convertResultSetToObject(ResultSet resultSet,ResultSet resultSet2) throws SQLException{
         User user = new User();
