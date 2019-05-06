@@ -4,9 +4,13 @@ import JobOonja.DataLayer.DBConnectionPool.ConnectionPool;
 import JobOonja.Entities.Project;
 import JobOonja.Entities.Skills;
 import JobOonja.Entities.User;
+import JobOonja.itemException.NotEnoughSkillsException;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import static JobOonja.DataLayer.DataMapper.UserMapper.getSingleUserFromDB;
+import static JobOonja.Functions.Functions.checkForEnoughSkills;
 
 public class ProjectMapper {
 
@@ -51,7 +55,7 @@ public class ProjectMapper {
 
     public static void insertProjectSkillToDB(Project p) throws SQLException{
         Connection c = ConnectionPool.getConnection();
-        System.out.println(String.format("INSERT INTO projectSkill(projectId,skillName,point) SELECT ?,?,? WHERE NOT EXISTS(SELECT 1 FROM projectSkill WHERE projectId = ? AND skillName = ? AND point = ?) "));
+//        System.out.println(String.format("INSERT INTO projectSkill(projectId,skillName,point) SELECT ?,?,? WHERE NOT EXISTS(SELECT 1 FROM projectSkill WHERE projectId = ? AND skillName = ? AND point = ?) "));
         PreparedStatement st = c.prepareStatement(String.format("INSERT OR REPLACE INTO projectSkill VALUES (?,?,?)","projectId","skillName","point"));
         System.out.println(p.getTitle());
         for(Skills s: p.getSkills()){
@@ -82,6 +86,37 @@ public class ProjectMapper {
         stat.close();
         connection.close();
         return project;
+    }
+
+    public static ArrayList<Project> getAllProjectFromDB() throws SQLException{
+
+        ArrayList<Project> projects = new ArrayList<>();
+        User user = getSingleUserFromDB("1");
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT DISTINCT projectId FROM projectSkill"));
+        ResultSet allIdSet = stat.executeQuery();
+        while (allIdSet.next()) {
+            stat = connection.prepareStatement(String.format("SELECT * FROM projectSkill p WHERE p.projectId = ?"));
+            stat.setString(1,allIdSet.getString("projectId"));
+            ResultSet singleIdSkillsSet = stat.executeQuery();
+            ArrayList<Skills> projectSkill = new ArrayList<>();
+            while (singleIdSkillsSet.next()){
+                projectSkill.add(new Skills(singleIdSkillsSet.getString("skillName"),singleIdSkillsSet.getInt("point")));
+            }
+            try{
+                checkForEnoughSkills(user.getSkills(),projectSkill);
+                System.out.println("khaa : " + allIdSet.getString("projectId"));
+                Project p = getSingleProjectFromDB(allIdSet.getString("projectId"));
+                projects.add(p);
+                projectSkill.clear();
+            }catch (NotEnoughSkillsException ne){
+//                System.out.println(ne.getMessage());
+            }
+        }
+        stat.close();
+        connection.close();
+
+        return projects;
     }
 
     private static Project convertResultSetToObject(ResultSet rs,ResultSet rs2) throws SQLException {

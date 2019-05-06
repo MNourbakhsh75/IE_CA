@@ -34,7 +34,7 @@ public class  Listener implements ServletContextListener{
         User u3 = instruction3.run();
         getAllDataFromServer.getAllProjectsMethod();
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new ProjectRunnable(), 1, 2, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(new ProjectRunnable(), 1, 2, TimeUnit.HOURS);
         try{
             UserMapper userMapper = new UserMapper();
             insertUserToDB(u);
