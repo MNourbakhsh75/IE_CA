@@ -15,6 +15,7 @@ public class Project {
     private Long deadline;
     private User winner;
     private Integer budget;
+    private Long creationDate;
     public Project(){
 
     }
@@ -33,6 +34,12 @@ public class Project {
 
     public void setSkills(ArrayList<Skills> skills) {
         this.skills = skills;
+    }
+
+    public void setCreationDate(Long creationDate) {this.creationDate = creationDate;}
+
+    public Long getCreationDate() {
+        return creationDate;
     }
 
     public void setId(String id) {

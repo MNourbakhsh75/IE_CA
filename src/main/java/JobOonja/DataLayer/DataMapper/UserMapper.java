@@ -21,6 +21,8 @@ public class UserMapper {
         st.executeUpdate(sql);
         sql = "CREATE TABLE IF NOT EXISTS " + "userSkill" + " " + "(userId TEXT ,skillName Text ,point INT,PRIMARY KEY (userId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(userId) REFERENCES user(id));";
         st.executeUpdate(sql);
+        sql = "CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId TEXT,endorsedId TEXT,skillName Text,PRIMARY KEY (endorserId,endorsedId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(endorserId) REFERENCES user(id),FOREIGN KEY(endorsedId) REFERENCES user(id));";
+        st.executeUpdate(sql);
         st.close();
         con.close();
     }
@@ -109,9 +111,37 @@ public class UserMapper {
 
     }
 
-    //public static User searchUser(String name) throws SQLException {
+    public static void endorseUserSkill(String endorsedId,String endorserId,String name) throws SQLException {
 
-    //}
+        Connection connection = ConnectionPool.getConnection();
+        System.out.println(String.format("UPDATE userSkill SET point = point + 1 WHERE userId = "+endorsedId+" AND skillName = "+name+";"));
+        PreparedStatement statement = connection.prepareStatement(String.format("UPDATE userSkill SET point = point + 1 WHERE userId = ? AND skillName= ?;"));
+        statement.setString(1,endorsedId);
+        statement.setString(2,name);
+        statement.executeUpdate();
+        statement = connection.prepareStatement(String.format("insert into endorsement values(?,?,?)", "endorserId","endorsedId", "skillName"));
+        statement.setString(1,endorserId);
+        statement.setString(2,endorsedId);
+        statement.setString(3,name);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    public static User searchBetweenUsers(String name) throws SQLException{
+
+        ArrayList<User> users = new ArrayList<>();
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT firstName FROM user WHERE firstName LIKE ?"));
+        stat.setString(1,name);
+        ResultSet rs = stat.executeQuery();
+        while (rs.next()){
+            System.out.println(rs.getString("firstName"));
+        }
+        stat.close();
+        connection.close();
+        return null;
+    }
 
     private static User convertResultSetToObject(ResultSet resultSet,ResultSet resultSet2) throws SQLException{
         User user = new User();

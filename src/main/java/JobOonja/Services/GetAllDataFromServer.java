@@ -18,7 +18,7 @@ import static JobOonja.DataLayer.DataMapper.ProjectMapper.insertProjectSkillToDB
 public class GetAllDataFromServer {
     private Request request = new Request();
     private Instruction instruction;
-
+    private Long createDate = 0L;
     public GetAllDataFromServer(){
 
     }
@@ -28,6 +28,11 @@ public class GetAllDataFromServer {
             AddProject addProject = new AddProject(getProjects);
             ArrayList<Project> projects = addProject.run();
             ProjectMapper projectMapper = new ProjectMapper();
+            ArrayList<Project> newList = new ArrayList<>();
+            for(Project p: projects){
+                if(p.getCreationDate() > this.createDate)
+                    this.createDate = p.getCreationDate();
+            }
             insertProjecsToDB(projects);
             for(Project p : projects){
                 insertProjectSkillToDB(p);
@@ -35,6 +40,32 @@ public class GetAllDataFromServer {
         } catch (IOException | SQLException e1) {
             System.out.println(e1);
         }
+    }
+    public void getAllProjectsMethodRunable() {
+        System.out.println("ffff");
+        try {
+            String getProjects = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
+            AddProject addProject = new AddProject(getProjects);
+            ArrayList<Project> projects = addProject.run();
+            ArrayList<Project> newList = new ArrayList<>();
+            for(Project p : projects){
+                if(p.getCreationDate() > this.createDate){
+                    newList.add(p);
+                    this.createDate = p.getCreationDate();
+                }
+            }
+            for(Project p : newList){
+                System.out.println(p.getTitle());
+            }
+            insertProjecsToDB(newList);
+            for (Project pp : newList){
+                insertProjectSkillToDB(pp);
+            }
+
+        }catch (IOException | SQLException e1){
+            System.out.println(e1);
+        }
+
     }
     public void getAllSkillsMethod(){
 

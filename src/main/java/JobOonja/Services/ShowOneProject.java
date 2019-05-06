@@ -9,6 +9,7 @@ import JobOonja.itemException.itemNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static JobOonja.DataLayer.DataMapper.ProjectMapper.getSingleProjectFromDB;
 import static JobOonja.DataLayer.DataMapper.UserMapper.getSingleUserFromDB;
 import static JobOonja.Functions.Functions.*;
 import static JobOonja.Entities.JDB.accessDataBase;
@@ -18,18 +19,21 @@ public class ShowOneProject {
             Project p = null;
         ArrayList<User> projects2 = accessDataBase().getUsers();
         try {
-                User user = getUserData("1");
-                Project project = accessDataBase().getProjectBaseOnId(id);
-                try {
-                    checkForEnoughSkills(user.getSkills(),project.getSkills());
-                    p = project;
-                }catch (NotEnoughSkillsException e){
-                    String m = "برای دیدن این پروژه مهارت کافی ندارید";
-                    throw new NotEnoughSkillsException(m);
-                }
-            }catch (itemNotFoundException ie){
-            String ms = "پروژه ای با این id وجود ندارد!";
-            throw new itemNotFoundException(ms);
+            p = getSingleProjectFromDB(id);
+
+//                User user = getUserData("1");
+//                Project project = accessDataBase().getProjectBaseOnId(id);
+//                try {
+//                    checkForEnoughSkills(user.getSkills(),project.getSkills());
+//                    p = project;
+//                }catch (NotEnoughSkillsException e){
+//                    String m = "برای دیدن این پروژه مهارت کافی ندارید";
+//                    throw new NotEnoughSkillsException(m);
+//                }
+            }catch (SQLException ie){
+                System.out.println(ie);
+                String ms = "پروژه ای با این id وجود ندارد!";
+                throw new itemNotFoundException(ms);
             }
             return p;
     }
