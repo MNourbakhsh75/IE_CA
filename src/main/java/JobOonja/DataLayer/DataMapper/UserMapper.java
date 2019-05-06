@@ -6,6 +6,7 @@ import JobOonja.Entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserMapper {
 
@@ -109,6 +110,34 @@ public class UserMapper {
         statement.close();
         connection.close();
 
+    }
+
+    public static HashMap<String,ArrayList<String>> gerEndorsedUserSkill(String uid) throws SQLException{
+        HashMap<String,ArrayList<String>> ednorsedSkill = new HashMap<String, ArrayList<String>>();
+
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM endorsement e  WHERE e.endorserId = ?"));
+        statement.setString(1,uid);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()){
+            System.out.println("fdffdf: "+resultSet.getString("endorsedId"));
+            statement = connection.prepareStatement(String.format("SELECT * FROM endorsement e WHERE e.endorsedId = ?"));
+            statement.setString(1,resultSet.getString("endorsedId"));
+            ResultSet rs = statement.executeQuery();
+            ArrayList<String> endorsedSkillName = new ArrayList<>();
+            while (rs.next()){
+                endorsedSkillName.add(rs.getString("skillName"));
+            }
+            System.out.println("sizeee11: "+endorsedSkillName.size());
+            ednorsedSkill.put(resultSet.getString("endorsedId"),endorsedSkillName);
+//            endorsedSkillName.clear();
+        }
+        statement.close();
+        connection.close();
+        System.out.println("sizeee: "+ednorsedSkill.get("2").size());
+        for(String s : ednorsedSkill.get("2"))
+            System.out.println("fdffdf333: "+s);
+        return ednorsedSkill;
     }
 
     public static void endorseUserSkill(String endorsedId,String endorserId,String name) throws SQLException {

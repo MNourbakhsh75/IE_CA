@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static JobOonja.Functions.Functions.createJsonResponse;
-import static JobOonja.Functions.Functions.endorsedSkill;
+
 
 
 @Controller
@@ -38,8 +39,10 @@ public class ShowOneUserCtl extends HttpServlet {
             User user = showOneProject.getUserData(uid);
             jsonElement = gson.toJsonTree(user);
             jsonObject.add("user",jsonElement);
-            if (endorsedSkill.containsKey(uid)){
-                ArrayList<String> es = endorsedSkill.get(uid);
+            HashMap<String,ArrayList<String>> endus= new HashMap<>();
+            endus = showOneProject.getEndorserUserSkill("1");
+            if (endus.containsKey(uid)){
+                ArrayList<String> es = endus.get(uid);
                 for(String s: es){
                     jsonArray.add(s);
                 }

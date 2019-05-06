@@ -105,7 +105,7 @@ public class ProjectMapper {
             }
             try{
                 checkForEnoughSkills(user.getSkills(),projectSkill);
-                System.out.println("khaa : " + allIdSet.getString("projectId"));
+//                System.out.println("khaa : " + allIdSet.getString("projectId"));
                 Project p = getSingleProjectFromDB(allIdSet.getString("projectId"));
                 projects.add(p);
                 projectSkill.clear();

@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 public class Functions {
 
-    public static HashMap<String,ArrayList<String>> endorsedSkill = new HashMap<>();
+//    public static HashMap<String,ArrayList<String>> endorsedSkill = new HashMap<>();
 
     public static void checkForEnoughSkills(ArrayList<Skills> uSkills, ArrayList<Skills> pSkills) throws NotEnoughSkillsException {
         ArrayList<Skills> u = uSkills;

@@ -2,11 +2,13 @@ package JobOonja.Controller;
 
 
 import JobOonja.Services.EndorseUserSkill;
+import JobOonja.Services.ShowOneProject;
 import JobOonja.itemException.itemNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static JobOonja.Functions.Functions.*;
 
@@ -17,7 +19,8 @@ public class EndorseUserSkillsCtl {
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String endorseSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname) {
-
+        ShowOneProject showOneProject = new ShowOneProject();
+        HashMap<String,ArrayList<String>> endorsedSkill = showOneProject.getEndorserUserSkill("1");
         EndorseUserSkill endorseUserSkill = new EndorseUserSkill();
         String res;
         Boolean success;

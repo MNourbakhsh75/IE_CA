@@ -8,10 +8,11 @@ import JobOonja.itemException.itemNotFoundException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static JobOonja.DataLayer.DataMapper.ProjectMapper.getSingleProjectFromDB;
+import static JobOonja.DataLayer.DataMapper.UserMapper.gerEndorsedUserSkill;
 import static JobOonja.DataLayer.DataMapper.UserMapper.getSingleUserFromDB;
-import static JobOonja.Functions.Functions.*;
 import static JobOonja.Entities.JDB.accessDataBase;
 public class ShowOneProject {
 
@@ -48,14 +49,19 @@ public class ShowOneProject {
         }
         return u;
     }
-    public Boolean checkForFirstBiding(String uid,Project project){
-        Boolean isFirst;
+    public HashMap<String,ArrayList<String>> getEndorserUserSkill(String uid){
+
+        HashMap<String,ArrayList<String>> endorsedSkill2 = new HashMap<String, ArrayList<String>>();
         try {
-            project.checkForUniqueBidingUser(uid);
-            isFirst = true;
-        }catch (ItemAlreadyExistsException ie){
-            isFirst = false;
+            endorsedSkill2 = gerEndorsedUserSkill(uid);
+
+        }catch (SQLException s){
+            System.out.println(s);
         }
-        return isFirst;
+//        for(String k : endorsedSkill2.keySet()){
+//            for(String s: endorsedSkill2.get(k))
+//                System.out.println("kkkkk "+s);
+//        }
+        return endorsedSkill2;
     }
 }
