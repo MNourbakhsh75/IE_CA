@@ -112,13 +112,19 @@ public class UserMapper {
 
     }
 
-    public static HashMap<String,ArrayList<String>> gerEndorsedUserSkill(String uid) throws SQLException{
-        HashMap<String,ArrayList<String>> ednorsedSkill = new HashMap<String, ArrayList<String>>();
+    public static HashMap<String,ArrayList<String>> gerEndorsedUserSkill(String uid) throws Exception{
+        HashMap<String,ArrayList<String>> ednorsedSkill = new HashMap<>();
 
         Connection connection = ConnectionPool.getConnection();
         PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM endorsement e  WHERE e.endorserId = ?"));
         statement.setString(1,uid);
         ResultSet resultSet = statement.executeQuery();
+        System.out.println("fdffdffddfgfdhgf");
+//        if(!resultSet.next()) {
+//            statement.close();
+//            connection.close();
+//            return ednorsedSkill;
+//        }
         while (resultSet.next()){
             System.out.println("fdffdf: "+resultSet.getString("endorsedId"));
             statement = connection.prepareStatement(String.format("SELECT * FROM endorsement e WHERE e.endorsedId = ?"));
@@ -134,9 +140,9 @@ public class UserMapper {
         }
         statement.close();
         connection.close();
-        System.out.println("sizeee: "+ednorsedSkill.get("2").size());
-        for(String s : ednorsedSkill.get("2"))
-            System.out.println("fdffdf333: "+s);
+//        System.out.println("sizeee: "+ednorsedSkill.get("2").size());
+//        for(String s : ednorsedSkill.get("2"))
+//            System.out.println("fdffdf333: "+s);
         return ednorsedSkill;
     }
 
@@ -157,19 +163,22 @@ public class UserMapper {
         connection.close();
     }
 
-    public static User searchBetweenUsers(String name) throws SQLException{
+    public static ArrayList<User> searchBetweenUsers(String name) throws SQLException{
 
         ArrayList<User> users = new ArrayList<>();
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement stat = connection.prepareStatement(String.format("SELECT firstName FROM user WHERE firstName LIKE ?"));
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM user WHERE firstName = ? OR lastName = ?"));
         stat.setString(1,name);
+        stat.setString(2,name);
         ResultSet rs = stat.executeQuery();
         while (rs.next()){
             System.out.println(rs.getString("firstName"));
+            User u = getSingleUserFromDB(rs.getString("id"));
+            users.add(u);
         }
         stat.close();
         connection.close();
-        return null;
+        return users;
     }
 
     private static User convertResultSetToObject(ResultSet resultSet,ResultSet resultSet2) throws SQLException{

@@ -10,13 +10,13 @@ import static JobOonja.DataLayer.DataMapper.UserMapper.searchBetweenUsers;
 public class SearchUser {
 
     public ArrayList<User> getSearchReasult(String name){
-
+        ArrayList<User> users = null;
         try {
-            searchBetweenUsers(name);
+            users = searchBetweenUsers(name);
         }catch (SQLException e){
             System.out.println(e);
         }
 
-        return null;
+        return users;
     }
 }

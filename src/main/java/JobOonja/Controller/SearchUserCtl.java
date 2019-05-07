@@ -1,9 +1,16 @@
 package JobOonja.Controller;
 
 
+import JobOonja.Entities.User;
+import JobOonja.Services.GetAllUsers;
 import JobOonja.Services.SearchUser;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Controller
 public class SearchUserCtl {
@@ -14,8 +21,13 @@ public class SearchUserCtl {
     public String searchUserHandler(@RequestParam(value = "name") String name){
 
         SearchUser searchUser = new SearchUser();
-        searchUser.getSearchReasult(name);
-
-        return "khaa";
+        ArrayList<User> users  =searchUser.getSearchReasult(name);
+        Gson gson = new Gson();
+        JsonArray jsonArray = new JsonArray();
+        for(User u : users){
+            JsonElement jsonElement = gson.toJsonTree(u);
+            jsonArray.add(jsonElement);
+        }
+        return jsonArray.toString();
     }
 }

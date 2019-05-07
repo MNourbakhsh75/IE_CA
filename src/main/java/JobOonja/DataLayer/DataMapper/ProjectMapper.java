@@ -4,10 +4,12 @@ import JobOonja.DataLayer.DBConnectionPool.ConnectionPool;
 import JobOonja.Entities.Project;
 import JobOonja.Entities.Skills;
 import JobOonja.Entities.User;
+import JobOonja.Functions.SortByCDate;
 import JobOonja.itemException.NotEnoughSkillsException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static JobOonja.DataLayer.DataMapper.UserMapper.getSingleUserFromDB;
 import static JobOonja.Functions.Functions.checkForEnoughSkills;
@@ -22,7 +24,8 @@ public class ProjectMapper {
                 "description TEXT,"+
                 "imageUrl TEXT,"+
                 "deadline BIGINT,"+
-                "budget INT);";
+                "budget INT,"+
+                "creationDate BIGINT)";
         st.executeUpdate(sql);
         sql = "CREATE TABLE IF NOT EXISTS " + "projectSkill" + " " + "(projectId TEXT ,skillName TEXT ,point INT,PRIMARY KEY (projectId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(projectId) REFERENCES project(id));";
         st.executeUpdate(sql);
@@ -38,7 +41,7 @@ public class ProjectMapper {
 
         System.out.println(projects.get(0).getTitle());
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement statement = connection.prepareStatement(String.format("insert into project values(?,?,?,?,?,?)", "id", "title","description","imageUrl","deadline","budget"));
+        PreparedStatement statement = connection.prepareStatement(String.format("insert into project values(?,?,?,?,?,?,?)", "id", "title","description","imageUrl","deadline","budget","creationDate"));
         for(Project p : projects){
             statement.setString(1,p.getId());
             statement.setString(2,p.getTitle());
@@ -46,11 +49,23 @@ public class ProjectMapper {
             statement.setString(4,p.getImageUrl());
             statement.setLong(5,p.getDeadline());
             statement.setInt(6,p.getBudget());
+            statement.setLong(7,p.getCreationDate());
             statement.executeUpdate();
         }
 
         statement.close();
         connection.close();
+    }
+
+    public static void insertToBidTable(String uid,String pid,Integer bidAmount) throws SQLException{
+        Connection c = ConnectionPool.getConnection();
+        PreparedStatement st = c.prepareStatement(String.format("INSERT OR REPLACE INTO bid VALUES (?,?,?)","projectId","userId","bidAmount"));
+        st.setString(1,pid);
+        st.setString(2,uid);
+        st.setInt(3,bidAmount);
+        st.executeUpdate();
+        st.close();
+        c.close();
     }
 
     public static void insertProjectSkillToDB(Project p) throws SQLException{
@@ -115,7 +130,26 @@ public class ProjectMapper {
         }
         stat.close();
         connection.close();
+//        Collections.sort(projects, new SortByCDate());
+        return projects;
+    }
 
+    public static ArrayList<Project> searchBetweenProjects(String name) throws SQLException{
+
+        ArrayList<Project> projects = new ArrayList<>();
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM project WHERE title = ? OR description = ?"));
+        stat.setString(1,name);
+        stat.setString(2,name);
+        ResultSet rs = stat.executeQuery();
+        while (rs.next()){
+            System.out.println(rs.getString("title"));
+            Project p = getSingleProjectFromDB(rs.getString("id"));
+            projects.add(p);
+        }
+        stat.close();
+        connection.close();
+        System.out.println(projects.size());
         return projects;
     }
 

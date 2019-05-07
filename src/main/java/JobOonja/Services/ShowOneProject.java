@@ -51,12 +51,13 @@ public class ShowOneProject {
     }
     public HashMap<String,ArrayList<String>> getEndorserUserSkill(String uid){
 
-        HashMap<String,ArrayList<String>> endorsedSkill2 = new HashMap<String, ArrayList<String>>();
+        HashMap<String,ArrayList<String>> endorsedSkill2 = null;
         try {
             endorsedSkill2 = gerEndorsedUserSkill(uid);
 
-        }catch (SQLException s){
+        }catch (Exception s){
             System.out.println(s);
+            return null;
         }
 //        for(String k : endorsedSkill2.keySet()){
 //            for(String s: endorsedSkill2.get(k))
