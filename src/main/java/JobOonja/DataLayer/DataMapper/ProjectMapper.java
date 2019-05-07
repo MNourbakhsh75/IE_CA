@@ -1,6 +1,7 @@
 package JobOonja.DataLayer.DataMapper;
 
 import JobOonja.DataLayer.DBConnectionPool.ConnectionPool;
+import JobOonja.Entities.Bid;
 import JobOonja.Entities.Project;
 import JobOonja.Entities.Skills;
 import JobOonja.Entities.User;
@@ -97,7 +98,10 @@ public class ProjectMapper {
         stat = connection.prepareStatement(String.format("SELECT * FROM projectSkill p WHERE p.projectId = ?"));
         stat.setString(1,pid);
         ResultSet rs2 = stat.executeQuery();
-        project = convertResultSetToObject(rs,rs2);
+        stat = connection.prepareStatement(String.format("SELECT * FROM bid b WHERE b.projectId = ?"));
+        stat.setString(1,pid);
+        ResultSet rs3 = stat.executeQuery();
+        project = convertResultSetToObject(rs,rs2,rs3);
         stat.close();
         connection.close();
         return project;
@@ -153,7 +157,7 @@ public class ProjectMapper {
         return projects;
     }
 
-    private static Project convertResultSetToObject(ResultSet rs,ResultSet rs2) throws SQLException {
+    private static Project convertResultSetToObject(ResultSet rs,ResultSet rs2,ResultSet rs3) throws SQLException {
 
         Project project = new Project();
         project.setId(rs.getString("id"));
@@ -164,6 +168,11 @@ public class ProjectMapper {
         project.setImageUrl(rs.getString("imageUrl"));
         while (rs2.next()){
             project.addSkill(rs2.getString("skillName"),rs2.getInt("point"));
+        }
+        while (rs3.next()){
+            User user = getSingleUserFromDB(rs3.getString("userId"));
+            Bid bid = new Bid(user,rs3.getInt("bidAmount"));
+            project.addBids(bid);
         }
         return project;
     }
