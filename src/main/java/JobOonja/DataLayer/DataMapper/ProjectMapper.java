@@ -142,12 +142,12 @@ public class ProjectMapper {
 
         ArrayList<Project> projects = new ArrayList<>();
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM project WHERE title = ? OR description = ?"));
-        stat.setString(1,name);
-        stat.setString(2,name);
+        PreparedStatement stat = connection.prepareStatement("SELECT * FROM project WHERE title LIKE ? OR description LIKE ?");
+        stat.setString(1,"%" + name + "%");
+        stat.setString(2,"%" + name + "%");
         ResultSet rs = stat.executeQuery();
         while (rs.next()){
-            System.out.println(rs.getString("title"));
+//            System.out.println(rs.getString("title"));
             Project p = getSingleProjectFromDB(rs.getString("id"));
             projects.add(p);
         }

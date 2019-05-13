@@ -167,14 +167,17 @@ public class UserMapper {
 
         ArrayList<User> users = new ArrayList<>();
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM user WHERE firstName = ? OR lastName = ?"));
-        stat.setString(1,name);
-        stat.setString(2,name);
+        PreparedStatement stat = connection.prepareStatement("SELECT * FROM user WHERE firstName LIKE ? OR lastName LIKE ?");
+        stat.setString(1,"%" + name + "%");
+        stat.setString(2,"%"+name+"%");
         ResultSet rs = stat.executeQuery();
+//        System.out.println(rs.getInt("id"));
         while (rs.next()){
-            System.out.println(rs.getString("firstName"));
-            User u = getSingleUserFromDB(rs.getString("id"));
-            users.add(u);
+//            System.out.println(rs.getString("firstName"));
+            if(!rs.getString("id").equals("1")) {
+                User u = getSingleUserFromDB(rs.getString("id"));
+                users.add(u);
+            }
         }
         stat.close();
         connection.close();
