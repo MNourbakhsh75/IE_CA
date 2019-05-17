@@ -1,6 +1,7 @@
 package JobOonja.Controller;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 import JobOonja.itemException.itemNotFoundException;
 import JobOonja.Entities.User;
@@ -28,8 +29,8 @@ public class ShowOneUserCtl extends HttpServlet {
     @RequestMapping(value = "/user/{id}",method= RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String oneUserHandler(@PathVariable("id") String uid) {
-
+    public String oneUserHandler(@PathVariable("id") String uid,HttpServletRequest request) {
+        String userName = request.getAttribute("userName").toString();
         ShowOneProject showOneProject = new ShowOneProject();
         JsonElement jsonElement = null;
         JsonObject jsonObject = new JsonObject();
@@ -40,7 +41,7 @@ public class ShowOneUserCtl extends HttpServlet {
             jsonElement = gson.toJsonTree(user);
             jsonObject.add("user",jsonElement);
             HashMap<String,ArrayList<String>> endus= new HashMap<>();
-            endus = showOneProject.getEndorserUserSkill("1");
+            endus = showOneProject.getEndorserUserSkill(userName);
             if (endus.containsKey(uid)){
                 ArrayList<String> es = endus.get(uid);
                 for(String s: es){

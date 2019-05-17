@@ -7,6 +7,7 @@ import JobOonja.itemException.itemNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,9 +19,10 @@ public class EndorseUserSkillsCtl {
     @RequestMapping(value = "/user/{id}/skill",method= RequestMethod.PUT,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String endorseSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname) {
+    public String endorseSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname, HttpServletRequest request) {
+        String userName = request.getAttribute("userName").toString();
         ShowOneProject showOneProject = new ShowOneProject();
-        HashMap<String,ArrayList<String>> endorsedSkill = showOneProject.getEndorserUserSkill("1");
+        HashMap<String,ArrayList<String>> endorsedSkill = showOneProject.getEndorserUserSkill(userName);
         EndorseUserSkill endorseUserSkill = new EndorseUserSkill();
         String res;
         Boolean success;
@@ -42,7 +44,7 @@ public class EndorseUserSkillsCtl {
             }
             if (isFirst) {
                 try {
-                    endorseUserSkill.endorseSkills(uid, sname);
+                    endorseUserSkill.endorseSkills(userName,uid, sname);
                     if (endorsedSkill.containsKey(uid)) {
                         ArrayList<String> endList = endorsedSkill.get(uid);
                         endList.add(sname);

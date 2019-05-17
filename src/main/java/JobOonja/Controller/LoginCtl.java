@@ -46,7 +46,7 @@ public class LoginCtl {
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(timestamp.getTime());
-                cal.add(Calendar.HOUR, 5);
+                cal.add(Calendar.SECOND, 30);
                 Timestamp newtimestamp = new Timestamp(cal.getTime().getTime());
 //                Algorithm algorithmHS = Algorithm.HMAC256("joboonja");
 //                String token = JWT.create()

@@ -10,11 +10,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 import static JobOonja.Functions.Functions.createJsonResponse;
@@ -25,13 +23,13 @@ public class ShowAllProjectCtl {
     @RequestMapping(value = "/project",method=RequestMethod.GET,
     produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String allProjectHandler(@RequestParam String userName) {
+    public String allProjectHandler(HttpServletRequest request) {
         GetAllProject getAllProject = new GetAllProject();
         JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
-        System.out.println("req : "+userName);
+        String userName = request.getAttribute("userName").toString();
         try {
-            ArrayList<Project> projects = getAllProject.getProjects();
+            ArrayList<Project> projects = getAllProject.getProjects(userName);
             for (Project p : projects){
                 JsonElement jsonElement = gson.toJsonTree(p);
                 jsonArray.add(jsonElement);

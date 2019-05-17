@@ -142,8 +142,8 @@ public class UserMapper {
         ResultSet rs = stat.executeQuery(String.format("SELECT * FROM user"));
         System.out.println(rs.getString("firstName"));
         while (rs.next()){
-            PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userId = ?"));
-            statement.setString(1,rs.getString("id"));
+            PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userName = ?"));
+            statement.setString(1,rs.getString("userName"));
             ResultSet rs2 = statement.executeQuery();
             User user = convertResultSetToObject(rs,rs2);
             users.add(user);
@@ -156,7 +156,7 @@ public class UserMapper {
     public static void addNewSkillToUser(String uid,String name) throws SQLException{
 
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement statement = connection.prepareStatement(String.format("insert into userSkill values(?,?,?)", "userId", "skillName","point"));
+        PreparedStatement statement = connection.prepareStatement(String.format("insert into userSkill values(?,?,?)", "userName", "skillName","point"));
         statement.setString(1,uid);
         statement.setString(2,name);
         statement.setInt(3,0);
@@ -168,7 +168,7 @@ public class UserMapper {
     public static void deleteUserSkill(String uid,String name) throws SQLException{
 
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement statement = connection.prepareStatement(String.format("DELETE FROM userSkill  WHERE userId = ? AND skillName = ?"));
+        PreparedStatement statement = connection.prepareStatement(String.format("DELETE FROM userSkill  WHERE userName = ? AND skillName = ?"));
         statement.setString(1,uid);
         statement.setString(2,name);
         statement.executeUpdate();
@@ -214,8 +214,8 @@ public class UserMapper {
     public static void endorseUserSkill(String endorsedId,String endorserId,String name) throws SQLException {
 
         Connection connection = ConnectionPool.getConnection();
-        System.out.println(String.format("UPDATE userSkill SET point = point + 1 WHERE userId = "+endorsedId+" AND skillName = "+name+";"));
-        PreparedStatement statement = connection.prepareStatement(String.format("UPDATE userSkill SET point = point + 1 WHERE userId = ? AND skillName= ?;"));
+        System.out.println(String.format("UPDATE userSkill SET point = point + 1 WHERE userName = "+endorsedId+" AND skillName = "+name+";"));
+        PreparedStatement statement = connection.prepareStatement(String.format("UPDATE userSkill SET point = point + 1 WHERE userName = ? AND skillName= ?;"));
         statement.setString(1,endorsedId);
         statement.setString(2,name);
         statement.executeUpdate();

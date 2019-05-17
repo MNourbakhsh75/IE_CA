@@ -11,8 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 public class AddUserSkills {
 
-    public static void addUserSkills(String id,String name) throws itemNotFoundException {
-        if (id.equals("1")){
+    public static void addUserSkills(String loggedIn,String id,String name) throws itemNotFoundException {
+        if (id.equals(loggedIn)){
             try {
                 addNewSkillToUser(id,name);
 //                User user = accessDataBase().getUserBaseOnId(id);

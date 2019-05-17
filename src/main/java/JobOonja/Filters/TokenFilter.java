@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@WebFilter(filterName = "JobOonja.Filters.TokenFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "JobOonja.Filters.TokenFilter", urlPatterns = {"/projec/*","/project","/user","/user/*","/validtoken"})
 public class TokenFilter implements Filter {
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList("", "/login", "/logout", "/register")));
@@ -56,6 +56,7 @@ public class TokenFilter implements Filter {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("msg","احراز هویت موفق نبود");
                 jsonObject.addProperty("success",false);
+                jsonObject.addProperty("code",403);
                 PrintWriter printWriter = response.getWriter();
                 printWriter.println(jsonObject.toString());
             }

@@ -12,11 +12,11 @@ import static JobOonja.Entities.JDB.accessDataBase;
 
 public class EndorseUserSkill {
 
-    public void endorseSkills(String uid,String sName) throws itemNotFoundException{
+    public void endorseSkills(String userName,String uid,String sName) throws itemNotFoundException{
 
-        if(!uid.equals("1")) {
+        if(!uid.equals(userName)) {
             try {
-                endorseUserSkill(uid,"1",sName);
+                endorseUserSkill(uid,userName,sName);
 //                User user = accessDataBase().getUserBaseOnId(uid);
 //                accessDataBase().checkForValidSkill(sName);
 //                ArrayList<Skills> uSkills = user.getSkills();

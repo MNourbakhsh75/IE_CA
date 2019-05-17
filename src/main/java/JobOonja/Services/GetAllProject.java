@@ -12,13 +12,13 @@ import static JobOonja.Entities.JDB.accessDataBase;
 
 public class GetAllProject {
 
-    public ArrayList<Project> getProjects() throws NotEnoughSkillsException,itemNotFoundException {
+    public ArrayList<Project> getProjects(String userName) throws NotEnoughSkillsException,itemNotFoundException {
         ArrayList<Project> showProjects = new ArrayList<>();
         ArrayList<Project> projects = accessDataBase().getProjects();
         Integer counter = 0;
         Integer counter1 = 0;
         try {
-            showProjects = getAllProjectFromDB("1");
+            showProjects = getAllProjectFromDB(userName);
 //            User user = accessDataBase().getUserBaseOnId("1");
 //            for(Project p : projects){
 //                try {

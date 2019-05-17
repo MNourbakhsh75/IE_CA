@@ -10,12 +10,13 @@ import static JobOonja.Entities.JDB.accessDataBase;
 
 public class GetAllUsers {
 
-    public ArrayList<User> get(){
+    public ArrayList<User> get(String userName){
         ArrayList<User> users = new ArrayList<>();
         try {
             ArrayList<User> users2 = getAllUserFromDB();
+//            System.out.println("users2 "+users2);
             for(User u:  users2){
-                if(!u.getId().equals("1"))
+                if(!u.getUserName().equals(userName))
                     users.add(u);
             }
             return users;

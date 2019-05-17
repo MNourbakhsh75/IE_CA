@@ -19,7 +19,8 @@ public class DelUserSkillsCtl {
     @RequestMapping(value = "/user/{id}/skill",method= RequestMethod.DELETE,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String delUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname) {
+    public String delUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname,HttpServletRequest request) {
+        String userName = request.getAttribute("userName").toString();
         String msg;
         Boolean success;
         Integer code;
@@ -29,7 +30,7 @@ public class DelUserSkillsCtl {
             success = false;
         }else {
             try {
-                deleteUserSkills(uid, sname);
+                deleteUserSkills(userName,uid, sname);
                 msg = "عملیات موفق آمیز بود!";
                 code = 200;
                 success = true;

@@ -12,8 +12,8 @@ import static JobOonja.Entities.JDB.accessDataBase;
 
 public class DeleteUserSkills {
 
-    public static void deleteUserSkills(String uid,String name) throws itemNotFoundException {
-        if (uid.equals("1")) {
+    public static void deleteUserSkills(String userName,String uid,String name) throws itemNotFoundException {
+        if (uid.equals(userName)) {
             try {
                 deleteUserSkill(uid,name);
 //                User user = accessDataBase().getUserBaseOnId(uid);

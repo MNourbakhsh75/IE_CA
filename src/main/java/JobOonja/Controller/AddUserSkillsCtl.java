@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import static JobOonja.Functions.Functions.createJsonResponse;
 import static JobOonja.Services.AddUserSkills.addUserSkills;
 
@@ -14,7 +16,8 @@ public class AddUserSkillsCtl {
     @RequestMapping(value = "/user/{id}/skill",method= RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String addUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname)  {
+    public String addUserSkillHandeler(@PathVariable("id") String uid, @RequestParam(value = "skillName",required = false) String sname, HttpServletRequest request)  {
+        String userName = request.getAttribute("userName").toString();
         String msg;
         Integer code;
         Boolean success;
@@ -24,7 +27,7 @@ public class AddUserSkillsCtl {
             success = false;
         }else {
             try {
-                addUserSkills(uid, sname);
+                addUserSkills(userName,uid, sname);
                 msg = "عملیات موفق آمیز بود!";
                 code = 200;
                 success = true;
