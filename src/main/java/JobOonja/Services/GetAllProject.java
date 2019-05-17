@@ -18,7 +18,7 @@ public class GetAllProject {
         Integer counter = 0;
         Integer counter1 = 0;
         try {
-            showProjects = getAllProjectFromDB();
+            showProjects = getAllProjectFromDB("1");
 //            User user = accessDataBase().getUserBaseOnId("1");
 //            for(Project p : projects){
 //                try {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -24,10 +25,11 @@ public class ShowAllProjectCtl {
     @RequestMapping(value = "/project",method=RequestMethod.GET,
     produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String allProjectHandler() {
+    public String allProjectHandler(@RequestParam String userName) {
         GetAllProject getAllProject = new GetAllProject();
         JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
+        System.out.println("req : "+userName);
         try {
             ArrayList<Project> projects = getAllProject.getProjects();
             for (Project p : projects){

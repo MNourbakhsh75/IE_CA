@@ -15,10 +15,10 @@ import java.util.ArrayList;
 @Controller
 public class SearchUserCtl {
 
-    @RequestMapping(value = "/search/user",method= RequestMethod.GET,
+    @RequestMapping(value = "/user/search",method= RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String searchUserHandler(@RequestParam(value = "name") String name){
+    public String searchUserHandler(@RequestParam(value = "q") String name){
 
         SearchUser searchUser = new SearchUser();
         ArrayList<User> users  =searchUser.getSearchReasult(name);

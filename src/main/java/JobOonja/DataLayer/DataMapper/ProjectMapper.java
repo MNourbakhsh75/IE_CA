@@ -107,10 +107,10 @@ public class ProjectMapper {
         return project;
     }
 
-    public static ArrayList<Project> getAllProjectFromDB() throws SQLException{
+    public static ArrayList<Project> getAllProjectFromDB(String userName) throws SQLException{
 
         ArrayList<Project> projects = new ArrayList<>();
-        User user = getSingleUserFromDB("1");
+        User user = getSingleUserFromDB(userName);
         Connection connection = ConnectionPool.getConnection();
         PreparedStatement stat = connection.prepareStatement(String.format("SELECT DISTINCT projectId FROM projectSkill"));
         ResultSet allIdSet = stat.executeQuery();

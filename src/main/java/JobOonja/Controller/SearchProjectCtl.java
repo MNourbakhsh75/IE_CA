@@ -21,7 +21,7 @@ public class SearchProjectCtl {
     @RequestMapping(value = "/search/project",method= RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String searchProjectHandler(@RequestParam(value = "name") String name){
+    public String searchProjectHandler(@RequestParam(value = "q") String name){
 
         SearchProject searchProject = new SearchProject();
         ArrayList<Project> projects  =searchProject.getSearchReasult(name);

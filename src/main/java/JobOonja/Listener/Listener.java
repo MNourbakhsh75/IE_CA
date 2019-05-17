@@ -37,9 +37,9 @@ public class  Listener implements ServletContextListener{
         scheduler.scheduleAtFixedRate(new ProjectRunnable(), 1, 2, TimeUnit.MINUTES);
         try{
             UserMapper userMapper = new UserMapper();
-            insertUserToDB(u);
-            insertUserToDB(u2);
-            insertUserToDB(u3);
+//            insertUserToDB(u);
+//            insertUserToDB(u2);
+//            insertUserToDB(u3);
         }catch (SQLException s){
             System.out.println(s);
         }

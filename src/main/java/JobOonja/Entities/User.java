@@ -9,12 +9,30 @@ public class User {
     private String jobTitle;
     private String profilePictureURL;
     private String bio;
+    private String userName;
+    private String password;
     private ArrayList<Skills> skills = new ArrayList<Skills>();
     public User(){
 
     }
     public void addSkill(String name,Integer point){
         skills.add(new Skills(name, point));
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {

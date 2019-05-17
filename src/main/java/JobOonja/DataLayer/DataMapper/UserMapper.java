@@ -4,6 +4,9 @@ import JobOonja.DataLayer.DBConnectionPool.ConnectionPool;
 import JobOonja.Entities.Skills;
 import JobOonja.Entities.User;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,16 +16,18 @@ public class UserMapper {
     public UserMapper() throws SQLException{
         Connection con = ConnectionPool.getConnection();
         Statement st = con.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS " + "user" + " " + "(id TEXT PRIMARY KEY,"+
+        String sql = "CREATE TABLE IF NOT EXISTS " + "user" + " " + "(userName TEXT PRIMARY KEY,"+
                 "firstName TEXT,"+
                 "lastName TEXT,"+
                 "jobTitle TEXT,"+
                 "profilePictureURL TEXT,"+
                 "bio TEXT);";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "userSkill" + " " + "(userId TEXT ,skillName Text ,point INT,PRIMARY KEY (userId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(userId) REFERENCES user(id));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "users" + " " + "(userName TEXT PRIMARY KEY,password Text,FOREIGN KEY(userName) REFERENCES user(userName));";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId TEXT,endorsedId TEXT,skillName Text,PRIMARY KEY (endorserId,endorsedId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(endorserId) REFERENCES user(id),FOREIGN KEY(endorsedId) REFERENCES user(id));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "userSkill" + " " + "(userName TEXT ,skillName Text ,point INT,PRIMARY KEY (userName,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(userName) REFERENCES user(userName));";
+        st.executeUpdate(sql);
+        sql = "CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId TEXT,endorsedId TEXT,skillName Text,PRIMARY KEY (endorserId,endorsedId,skillName),FOREIGN KEY(skillName) REFERENCES userSkill(skillName),FOREIGN KEY(endorserId) REFERENCES user(userName),FOREIGN KEY(endorsedId) REFERENCES userSkill(userName));";
         st.executeUpdate(sql);
         st.close();
         con.close();
@@ -30,8 +35,8 @@ public class UserMapper {
 
     public static void insertUserToDB(User u) throws SQLException{
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement statement = connection.prepareStatement(String.format("insert into user values(?,?,?,?,?,?)", "id", "firstName","lastName","jobTitle","profilePictureURL","bio"));
-        statement.setString(1,u.getId());
+        PreparedStatement statement = connection.prepareStatement(String.format("insert into user values(?,?,?,?,?,?)", "userName", "firstName","lastName","jobTitle","profilePictureURL","bio"));
+        statement.setString(1,u.getUserName());
         statement.setString(2,u.getFirstName());
         statement.setString(3,u.getLastName());
         statement.setString(4,u.getJobTitle());
@@ -39,9 +44,13 @@ public class UserMapper {
         statement.setString(6,u.getBio());
         statement.executeUpdate();
 
-        statement = connection.prepareStatement(String.format("insert into userSkill values(?,?,?)", "userId", "skillName","point"));
+        statement = connection.prepareStatement(String.format("insert into users values(?,?)", "userName", "password"));
+        statement.setString(1,u.getUserName());
+        statement.setString(2,getMd5(u.getPassword()));
+        statement.executeUpdate();
+        statement = connection.prepareStatement(String.format("insert into userSkill values(?,?,?)", "userName", "skillName","point"));
         for (Skills s : u.getSkills()){
-            statement.setString(1,u.getId());
+            statement.setString(1,u.getUserName());
             statement.setString(2,s.getName());
             statement.setInt(3,s.getPoint());
             statement.addBatch();
@@ -54,14 +63,70 @@ public class UserMapper {
 
     }
 
+    public static String loggedInUser(String userName,String password) throws SQLException{
+
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM users u WHERE u.userName = ? AND u.password = ?"));
+        stat.setString(1,userName);
+        stat.setString(2,getMd5(password));
+        String res = null;
+        ResultSet resultSet = stat.executeQuery();
+        if(resultSet.next()){
+            res =  resultSet.getString("userName");
+        }
+        stat.close();
+        connection.close();
+        return res;
+    }
+
+    public static Boolean checkForUniqueUserName(String userName) throws SQLException{
+        Boolean res = false;
+        Connection connection = ConnectionPool.getConnection();
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM users u WHERE u.userName = ?"));
+        stat.setString(1,userName);
+        ResultSet resultSet = stat.executeQuery();
+        if(!resultSet.next())
+            res = true;
+        stat.close();
+        connection.close();
+        return res;
+    }
+
+    public static String getMd5(String input)
+    {
+        try {
+
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            //  of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static User getSingleUserFromDB(String uid) throws SQLException{
         User user = new User();
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM user u WHERE u.id = ?"));
+        PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM user u WHERE u.userName = ?"));
         stat.setString(1,uid);
         ResultSet rs = stat.executeQuery();
         System.out.println(rs.getString("firstName"));
-        stat = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userId = ?"));
+        stat = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userName = ?"));
         stat.setString(1,uid);
         ResultSet rs2 = stat.executeQuery();
         user = convertResultSetToObject(rs,rs2);
@@ -191,7 +256,7 @@ public class UserMapper {
         user.setBio(resultSet.getString("bio"));
         user.setJobTitle(resultSet.getString("jobTitle"));
         user.setProfilePictureURL(resultSet.getString("profilePictureURL"));
-        user.setId(resultSet.getString("id"));
+        user.setUserName(resultSet.getString("userName"));
         while (resultSet2.next()){
             user.addSkill(resultSet2.getString("skillName"),resultSet2.getInt("point"));
         }
