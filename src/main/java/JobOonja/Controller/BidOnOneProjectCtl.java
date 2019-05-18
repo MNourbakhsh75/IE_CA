@@ -6,6 +6,8 @@ import JobOonja.itemException.itemNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static JobOonja.Functions.Functions.createJsonResponse;
 
 
@@ -14,8 +16,9 @@ public class BidOnOneProjectCtl {
     @RequestMapping(value = "/project/{id}/bid",method= RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String bidOnProject(@PathVariable("id") String pid, @RequestParam(value = "amount",required = false) String amount) {
-
+    public String bidOnProject(@PathVariable("id") String pid, @RequestParam(value = "amount",required = false) String amount, HttpServletRequest request) {
+        String userName = request.getAttribute("userName").toString();
+        System.out.println("biddd : "+userName);
         String msg = null;
         Integer code;
         Boolean success;
@@ -30,7 +33,7 @@ public class BidOnOneProjectCtl {
             if (amountInt >= 0) {
                 AddBidingUser addBidingUser = new AddBidingUser();
                 try {
-                    addBidingUser.AddBid("1", pid, amountInt);
+                    addBidingUser.AddBid(userName, pid, amountInt);
                     msg = "عملیات موفق آمیز بود!";
                     code = 200;
                     success = true;

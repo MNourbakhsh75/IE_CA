@@ -34,7 +34,7 @@ public class GetAllProject {
 //                }
 //            }
         }catch (SQLException ie){
-            System.out.println(ie);
+            System.out.println("getProjects: "+ie);
             throw new itemNotFoundException("پروژه ای با مهارت های شما وجود ندارد");
         }
         return showProjects;

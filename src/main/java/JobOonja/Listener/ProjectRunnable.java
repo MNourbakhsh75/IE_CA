@@ -7,7 +7,7 @@ public class ProjectRunnable implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("runable");
+//        System.out.println("runable");
         GetAllDataFromServer getAllDataFromServer = new GetAllDataFromServer();
         getAllDataFromServer.getAllProjectsMethodRunable();
 

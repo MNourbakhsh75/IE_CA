@@ -228,7 +228,7 @@ public class UserMapper {
         connection.close();
     }
 
-    public static ArrayList<User> searchBetweenUsers(String name) throws SQLException{
+    public static ArrayList<User> searchBetweenUsers(String userName,String name) throws SQLException{
 
         ArrayList<User> users = new ArrayList<>();
         Connection connection = ConnectionPool.getConnection();
@@ -239,8 +239,8 @@ public class UserMapper {
 //        System.out.println(rs.getInt("id"));
         while (rs.next()){
 //            System.out.println(rs.getString("firstName"));
-            if(!rs.getString("id").equals("1")) {
-                User u = getSingleUserFromDB(rs.getString("id"));
+            if(!rs.getString("userName").equals(userName)) {
+                User u = getSingleUserFromDB(rs.getString("userName"));
                 users.add(u);
             }
         }

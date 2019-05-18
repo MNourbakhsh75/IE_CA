@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@WebFilter(filterName = "JobOonja.Filters.TokenFilter", urlPatterns = {"/projec/*","/project","/user","/user/*","/validtoken"})
+@WebFilter(filterName = "JobOonja.Filters.TokenFilter", urlPatterns = {"/project/*","/project","/user","/user/*","/validtoken"})
 public class TokenFilter implements Filter {
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList("", "/login", "/logout", "/register")));

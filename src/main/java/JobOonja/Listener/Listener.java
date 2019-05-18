@@ -20,6 +20,7 @@ import static JobOonja.Functions.Functions.*;
 @WebListener
 public class  Listener implements ServletContextListener{
     private ScheduledExecutorService scheduler;
+    private ScheduledExecutorService auctionscheduler;
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         System.out.println("Starting up!");
@@ -35,6 +36,8 @@ public class  Listener implements ServletContextListener{
         getAllDataFromServer.getAllProjectsMethod();
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new ProjectRunnable(), 1, 2, TimeUnit.MINUTES);
+        auctionscheduler = Executors.newSingleThreadScheduledExecutor();
+        auctionscheduler.scheduleAtFixedRate(new ActionRunnable(),1,1,TimeUnit.MINUTES);
         try{
             UserMapper userMapper = new UserMapper();
 //            insertUserToDB(u);

@@ -42,7 +42,7 @@ public class GetAllDataFromServer {
         }
     }
     public void getAllProjectsMethodRunable() {
-        System.out.println("ffff");
+//        System.out.println("ffff");
         try {
             String getProjects = request.getReq(new URL("http://142.93.134.194:8000/joboonja/project"));
             AddProject addProject = new AddProject(getProjects);
