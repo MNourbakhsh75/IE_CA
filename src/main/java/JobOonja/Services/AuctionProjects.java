@@ -20,6 +20,7 @@ public class AuctionProjects {
         ArrayList<Project> projects = new ArrayList<>();
         try {
             projects = getAllExpiredProject(timestamp);
+            System.out.println(projects.size());
             for(Project p : projects){
                 ArrayList<Bid> bids = p.getBids();
                 User winner = new User();
@@ -32,10 +33,11 @@ public class AuctionProjects {
                         }
                     }
                 }else{
-                    winner = null;
+//                    winner = null;
+                    winner.setUserName("");
                 }
                 System.out.println("done auction");
-                doneAuction(p.getId(),winner.getUserName());
+                doneAuction(p.getId(), winner.getUserName());
             }
         }catch (SQLException s){
             System.out.println("actionProjects: "+s);

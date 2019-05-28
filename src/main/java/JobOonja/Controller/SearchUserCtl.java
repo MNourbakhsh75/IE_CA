@@ -7,20 +7,27 @@ import JobOonja.Services.SearchUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@Controller
-public class SearchUserCtl {
+@WebServlet("/search/user")
+public class SearchUserCtl extends HttpServlet {
 
-    @RequestMapping(value = "/user/search",method= RequestMethod.GET,
-            produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String searchUserHandler(@RequestParam(value = "q") String name, HttpServletRequest request){
-        String userName = request.getAttribute("userName").toString();
+//    @RequestMapping(value = "/user/search",method= RequestMethod.GET,
+//            produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public String searchUserHandler(@RequestParam(value = "q") String name, HttpServletRequest request){
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String name = request.getParameter("q");
+    String userName = request.getAttribute("userName").toString();
         SearchUser searchUser = new SearchUser();
         ArrayList<User> users  = searchUser.getSearchReasult(userName,name);
         Gson gson = new Gson();
@@ -30,6 +37,8 @@ public class SearchUserCtl {
             JsonElement jsonElement = gson.toJsonTree(u);
             jsonArray.add(jsonElement);
         }
-        return jsonArray.toString();
+        String out = jsonArray.toString();
+        PrintWriter outStream = response.getWriter();
+        outStream.println(out);
     }
 }

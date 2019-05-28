@@ -8,23 +8,29 @@ import JobOonja.itemException.itemNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
+//import org.springframework.stereotype.Controller;
+////import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import static JobOonja.Functions.Functions.createJsonResponse;
 
-@Controller
-public class ShowAllProjectCtl {
+@WebServlet("/project")
+public class ShowAllProjectCtl extends HttpServlet {
 
-    @RequestMapping(value = "/project",method=RequestMethod.GET,
-    produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String allProjectHandler(HttpServletRequest request) {
-        GetAllProject getAllProject = new GetAllProject();
+//    @RequestMapping(value = "/project",method=RequestMethod.GET,
+//    produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    GetAllProject getAllProject = new GetAllProject();
         JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
         String userName = request.getAttribute("userName").toString();
@@ -35,8 +41,12 @@ public class ShowAllProjectCtl {
                 jsonArray.add(jsonElement);
             }
         }catch (NotEnoughSkillsException | itemNotFoundException ie){
-            return createJsonResponse(ie.getMessage(),406,false).toString();
+           String out =  createJsonResponse(ie.getMessage(),406,false).toString();
+            PrintWriter outStream = response.getWriter();
+            outStream.println(out);
         }
-        return jsonArray.toString();
+        String out =  jsonArray.toString();
+        PrintWriter outStream = response.getWriter();
+        outStream.println(out);
     }
 }

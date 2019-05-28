@@ -124,6 +124,9 @@ public class ProjectMapper {
         PreparedStatement stat4 = connection.prepareStatement(String.format("SELECT * FROM winners w WHERE w.projectId = ?"));
         stat4.setString(1,pid);
         ResultSet rs4 = stat4.executeQuery();
+        while (rs4.next()){
+            System.out.println("rs4 winner");
+        }
         project = convertResultSetToObject(rs,rs2,rs3,rs4);
         stat1.close();
         stat2.close();

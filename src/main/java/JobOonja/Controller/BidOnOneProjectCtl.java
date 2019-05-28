@@ -3,21 +3,31 @@ package JobOonja.Controller;
 import JobOonja.Services.AddBidingUser;
 import JobOonja.itemException.ItemAlreadyExistsException;
 import JobOonja.itemException.itemNotFoundException;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import static JobOonja.Functions.Functions.createJsonResponse;
 
 
-@Controller
-public class BidOnOneProjectCtl {
-    @RequestMapping(value = "/project/{id}/bid",method= RequestMethod.POST,
-            produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String bidOnProject(@PathVariable("id") String pid, @RequestParam(value = "amount",required = false) String amount, HttpServletRequest request) {
-        String userName = request.getAttribute("userName").toString();
+@WebServlet("/project/bid")
+
+public class BidOnOneProjectCtl extends HttpServlet {
+//    @RequestMapping(value = "/project/{id}/bid",method= RequestMethod.POST,
+//            produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public String bidOnProject(@PathVariable("id") String pid, @RequestParam(value = "amount",required = false) String amount, HttpServletRequest request) {
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String pid = request.getParameter("id");
+    String amount = request.getParameter("amount");
+    System.out.println("bidOnProject : "+amount);
+    String userName = request.getAttribute("userName").toString();
         System.out.println("biddd : "+userName);
         String msg = null;
         Integer code;
@@ -48,6 +58,8 @@ public class BidOnOneProjectCtl {
                 success = false;
             }
         }
-        return createJsonResponse(msg,code,success).toString();
+        String out = createJsonResponse(msg,code,success).toString();
+        PrintWriter outStream = response.getWriter();
+        outStream.println(out);
     }
 }
