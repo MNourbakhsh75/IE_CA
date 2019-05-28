@@ -236,10 +236,11 @@ public class UserMapper {
         PreparedStatement stat = connection.prepareStatement("SELECT * FROM user WHERE firstName LIKE ? OR lastName LIKE ?");
         stat.setString(1,"%" + name + "%");
         stat.setString(2,"%"+name+"%");
+        System.out.println("fdff");
+
         ResultSet rs = stat.executeQuery();
-//        System.out.println(rs.getInt("id"));
         while (rs.next()){
-//            System.out.println(rs.getString("firstName"));
+            System.out.println(rs.getString("firstName"));
             if(!rs.getString("userName").equals(userName)) {
                 User u = getSingleUserFromDB(rs.getString("userName"));
                 users.add(u);

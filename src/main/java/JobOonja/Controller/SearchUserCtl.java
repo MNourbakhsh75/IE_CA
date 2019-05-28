@@ -27,6 +27,7 @@ public class SearchUserCtl extends HttpServlet {
 //    public String searchUserHandler(@RequestParam(value = "q") String name, HttpServletRequest request){
 public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String name = request.getParameter("q");
+    System.out.println("q: "+name);
     String userName = request.getAttribute("userName").toString();
         SearchUser searchUser = new SearchUser();
         ArrayList<User> users  = searchUser.getSearchReasult(userName,name);
