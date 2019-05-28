@@ -11,7 +11,7 @@ public class SkillsMapper {
     public SkillsMapper() throws SQLException {
         Connection con = ConnectionPool.getConnection();
         Statement st = con.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name TEXT PRIMARY KEY);";
+        String sql = "CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name VARCHAR(255) PRIMARY KEY);";
         st.executeUpdate(sql);
         st.close();
         con.close();

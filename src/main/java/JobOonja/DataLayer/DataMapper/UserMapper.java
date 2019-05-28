@@ -16,18 +16,18 @@ public class UserMapper {
     public UserMapper() throws SQLException{
         Connection con = ConnectionPool.getConnection();
         Statement st = con.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS " + "user" + " " + "(userName TEXT PRIMARY KEY,"+
+        String sql = "CREATE TABLE IF NOT EXISTS " + "user" + " " + "(userName VARCHAR(255) PRIMARY KEY,"+
                 "firstName TEXT,"+
                 "lastName TEXT,"+
                 "jobTitle TEXT,"+
                 "profilePictureURL TEXT,"+
                 "bio TEXT);";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "users" + " " + "(userName TEXT PRIMARY KEY,password Text,FOREIGN KEY(userName) REFERENCES user(userName));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "users" + " " + "(userName VARCHAR(255) PRIMARY KEY,password Text,FOREIGN KEY(userName) REFERENCES user(userName));";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "userSkill" + " " + "(userName TEXT ,skillName Text ,point INT,PRIMARY KEY (userName,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(userName) REFERENCES user(userName));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "userSkill" + " " + "(userName VARCHAR(255) ,skillName VARCHAR(255) ,point INT,PRIMARY KEY (userName,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(userName) REFERENCES user(userName));";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId TEXT,endorsedId TEXT,skillName Text,PRIMARY KEY (endorserId,endorsedId,skillName),FOREIGN KEY(skillName) REFERENCES userSkill(skillName),FOREIGN KEY(endorserId) REFERENCES user(userName),FOREIGN KEY(endorsedId) REFERENCES userSkill(userName));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId VARCHAR(255),endorsedId VARCHAR(255),skillName VARCHAR(255),PRIMARY KEY (endorserId,endorsedId,skillName),FOREIGN KEY(skillName) REFERENCES userSkill(skillName),FOREIGN KEY(endorserId) REFERENCES user(userName),FOREIGN KEY(endorsedId) REFERENCES userSkill(userName));";
         st.executeUpdate(sql);
         st.close();
         con.close();
@@ -125,7 +125,8 @@ public class UserMapper {
         PreparedStatement stat = connection.prepareStatement(String.format("SELECT * FROM user u WHERE u.userName = ?"));
         stat.setString(1,uid);
         ResultSet rs = stat.executeQuery();
-        System.out.println(rs.getString("firstName"));
+        if(rs.next())
+            System.out.println(rs.getString("firstName"));
         stat = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userName = ?"));
         stat.setString(1,uid);
         ResultSet rs2 = stat.executeQuery();
@@ -140,7 +141,7 @@ public class UserMapper {
         Connection connection = ConnectionPool.getConnection();
         Statement stat = connection.createStatement();
         ResultSet rs = stat.executeQuery(String.format("SELECT * FROM user"));
-        System.out.println(rs.getString("firstName"));
+//        System.out.println(rs.getString("firstName"));
         while (rs.next()){
             PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM userSkill u WHERE u.userName = ?"));
             statement.setString(1,rs.getString("userName"));
@@ -251,12 +252,13 @@ public class UserMapper {
 
     private static User convertResultSetToObject(ResultSet resultSet,ResultSet resultSet2) throws SQLException{
         User user = new User();
-        user.setFirstName(resultSet.getString("firstName"));
-        user.setLastName(resultSet.getString("lastName"));
-        user.setBio(resultSet.getString("bio"));
-        user.setJobTitle(resultSet.getString("jobTitle"));
-        user.setProfilePictureURL(resultSet.getString("profilePictureURL"));
-        user.setUserName(resultSet.getString("userName"));
+        System.out.println(resultSet);
+            user.setFirstName(resultSet.getString("firstName"));
+            user.setLastName(resultSet.getString("lastName"));
+            user.setBio(resultSet.getString("bio"));
+            user.setJobTitle(resultSet.getString("jobTitle"));
+            user.setProfilePictureURL(resultSet.getString("profilePictureURL"));
+            user.setUserName(resultSet.getString("userName"));
         while (resultSet2.next()){
             user.addSkill(resultSet2.getString("skillName"),resultSet2.getInt("point"));
         }

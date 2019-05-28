@@ -20,7 +20,7 @@ public class ProjectMapper {
     public ProjectMapper() throws SQLException {
         Connection con = ConnectionPool.getConnection();
         Statement st = con.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY,"+
+        String sql = "CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id VARCHAR(255) PRIMARY KEY,"+
                 "title TEXT,"+
                 "description TEXT,"+
                 "imageUrl TEXT,"+
@@ -29,11 +29,11 @@ public class ProjectMapper {
                 "auction INT ,"+
                 "creationDate BIGINT)";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "projectSkill" + " " + "(projectId TEXT ,skillName TEXT ,point INT,PRIMARY KEY (projectId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(projectId) REFERENCES project(id));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "projectSkill" + " " + "(projectId VARCHAR(255) ,skillName VARCHAR(255) ,point INT,PRIMARY KEY (projectId,skillName),FOREIGN KEY(skillName) REFERENCES skill(name),FOREIGN KEY(projectId) REFERENCES project(id));";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "bid" + " " + "(projectId TEXT ,userName Text ,bidAmount INT,PRIMARY KEY (projectId,userName),FOREIGN KEY(projectId) REFERENCES project(id),FOREIGN KEY(userName) REFERENCES user(userName));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "bid" + " " + "(projectId VARCHAR(255) ,userName VARCHAR(255) ,bidAmount INT,PRIMARY KEY (projectId,userName),FOREIGN KEY(projectId) REFERENCES project(id),FOREIGN KEY(userName) REFERENCES user(userName));";
         st.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS " + "winners" + " " + "(projectId TEXT ,userName Text,PRIMARY KEY (projectId,userName),FOREIGN KEY(projectId) REFERENCES project(id),FOREIGN KEY(userName) REFERENCES user(userName));";
+        sql = "CREATE TABLE IF NOT EXISTS " + "winners" + " " + "(projectId VARCHAR(255) ,userName VARCHAR(255),PRIMARY KEY (projectId,userName),FOREIGN KEY(projectId) REFERENCES project(id),FOREIGN KEY(userName) REFERENCES user(userName));";
         st.executeUpdate(sql);
         st.close();
         con.close();
@@ -62,7 +62,7 @@ public class ProjectMapper {
 
     public static void insertToBidTable(String uid,String pid,Integer bidAmount) throws SQLException{
         Connection c = ConnectionPool.getConnection();
-        PreparedStatement st = c.prepareStatement(String.format("INSERT OR REPLACE INTO bid VALUES (?,?,?)","projectId","userName","bidAmount"));
+        PreparedStatement st = c.prepareStatement(String.format("INSERT INTO bid VALUES (?,?,?)","projectId","userName","bidAmount"));
         st.setString(1,pid);
         st.setString(2,uid);
         st.setInt(3,bidAmount);
@@ -90,7 +90,7 @@ public class ProjectMapper {
     public static void insertProjectSkillToDB(Project p) throws SQLException{
         Connection c = ConnectionPool.getConnection();
 //        System.out.println(String.format("INSERT INTO projectSkill(projectId,skillName,point) SELECT ?,?,? WHERE NOT EXISTS(SELECT 1 FROM projectSkill WHERE projectId = ? AND skillName = ? AND point = ?) "));
-        PreparedStatement st = c.prepareStatement(String.format("INSERT OR REPLACE INTO projectSkill VALUES (?,?,?)","projectId","skillName","point"));
+        PreparedStatement st = c.prepareStatement(String.format("INSERT INTO projectSkill VALUES (?,?,?)","projectId","skillName","point"));
         System.out.println(p.getTitle());
         for(Skills s: p.getSkills()){
             st.setString(1,p.getId());
@@ -124,10 +124,12 @@ public class ProjectMapper {
         PreparedStatement stat4 = connection.prepareStatement(String.format("SELECT * FROM winners w WHERE w.projectId = ?"));
         stat4.setString(1,pid);
         ResultSet rs4 = stat4.executeQuery();
-        while (rs4.next()){
-            System.out.println("rs4 winner");
-        }
+//        System.out.println("RS4");
+//        while (rs4.next()){
+//            System.out.println("rs4 winner");
+//        }
         project = convertResultSetToObject(rs,rs2,rs3,rs4);
+        System.out.println(project.getTitle());
         stat1.close();
         stat2.close();
         stat3.close();
@@ -135,17 +137,21 @@ public class ProjectMapper {
         return project;
     }
 
-    public static void doneAuction(String pid,String userName) throws SQLException{
-        System.out.println("doneAuction: "+userName);
+    public static void doneAuction(String pid,String userName,Boolean flag) throws SQLException{
+        System.out.println("doneAuction userName: "+userName);
+        System.out.println("doneAuction pid: "+pid);
         Connection connection = ConnectionPool.getConnection();
-        PreparedStatement stat1 = connection.prepareStatement(String.format("INSERT OR REPLACE INTO winners VALUES (?,?)","projectId","userName"));
-        stat1.setString(1,pid);
-        stat1.setString(2,userName);
-        stat1.executeUpdate();
         PreparedStatement stat2 = connection.prepareStatement(String.format("UPDATE project SET auction = 1 WHERE id = ?"));
         stat2.setString(1,pid);
         stat2.executeUpdate();
-        stat1.close();
+        if(flag) {
+            PreparedStatement stat1 = connection.prepareStatement(String.format("INSERT INTO winners VALUES (?,?)", "projectId", "userName"));
+            stat1.setString(1, pid);
+            stat1.setString(2, userName);
+            stat1.executeUpdate();
+            stat1.close();
+        }
+//        stat1.close();
         stat2.close();
         connection.close();
     }
@@ -154,10 +160,12 @@ public class ProjectMapper {
 
         ArrayList<Project> projects = new ArrayList<>();
         User user = getSingleUserFromDB(userName);
+//        System.out.println("userrr : "+user.getFirstName());
         Connection connection = ConnectionPool.getConnection();
         PreparedStatement stat = connection.prepareStatement(String.format("SELECT DISTINCT projectId FROM projectSkill"));
         ResultSet allIdSet = stat.executeQuery();
         while (allIdSet.next()) {
+//            System.out.println(allIdSet.getString("projectId"));
             stat = connection.prepareStatement(String.format("SELECT * FROM projectSkill p WHERE p.projectId = ?"));
             stat.setString(1,allIdSet.getString("projectId"));
             ResultSet singleIdSkillsSet = stat.executeQuery();
@@ -165,6 +173,7 @@ public class ProjectMapper {
             while (singleIdSkillsSet.next()){
                 projectSkill.add(new Skills(singleIdSkillsSet.getString("skillName"),singleIdSkillsSet.getInt("point")));
             }
+//            System.out.println("GETALLPDB");
             try{
                 checkForEnoughSkills(user.getSkills(),projectSkill);
 //                System.out.println("khaa : " + allIdSet.getString("projectId"));
@@ -177,7 +186,6 @@ public class ProjectMapper {
         }
         stat.close();
         connection.close();
-//        Collections.sort(projects, new SortByCDate());
         return projects;
     }
 
@@ -202,6 +210,7 @@ public class ProjectMapper {
 
     private static Project convertResultSetToObject(ResultSet rs,ResultSet rs2,ResultSet rs3,ResultSet rs4) throws SQLException {
 
+        rs.next();
         Project project = new Project();
         project.setId(rs.getString("id"));
         project.setTitle(rs.getString("title"));

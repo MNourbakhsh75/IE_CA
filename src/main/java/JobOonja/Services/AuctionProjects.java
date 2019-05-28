@@ -25,6 +25,7 @@ public class AuctionProjects {
                 ArrayList<Bid> bids = p.getBids();
                 User winner = new User();
                 int max = 0;
+                Boolean flag;
                 if(!bids.isEmpty()){
                     for(Bid b : bids){
                         if(b.getBidAmount()>max){
@@ -32,12 +33,14 @@ public class AuctionProjects {
                             winner = b.getBidingUser();
                         }
                     }
+                    flag = true;
                 }else{
 //                    winner = null;
                     winner.setUserName("");
+                    flag = false;
                 }
                 System.out.println("done auction");
-                doneAuction(p.getId(), winner.getUserName());
+                doneAuction(p.getId(), winner.getUserName(),flag);
             }
         }catch (SQLException s){
             System.out.println("actionProjects: "+s);

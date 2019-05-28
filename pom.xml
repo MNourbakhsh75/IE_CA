@@ -67,6 +67,16 @@
       <!--<version>2.1.2.RELEASE</version>-->
     <!--</dependency>-->
 
+      <!-- https://mvnrepository.com/artifact/com.mysql.jdbc/org.motechproject.com.mysql.jdbc -->
+
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.16</version>
+    </dependency>
+
+
 
 
 
