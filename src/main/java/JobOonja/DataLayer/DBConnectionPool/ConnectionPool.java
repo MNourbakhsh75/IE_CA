@@ -31,7 +31,8 @@ public class ConnectionPool {
         catch (ClassNotFoundException e) {
             System.out.println("eeee: "+e);
         }
-        return DriverManager.getConnection("jdbc:mysql://localhost:3333/joboonjadb","root","");
+        System.out.println("test database5");
+        return DriverManager.getConnection("jdbc:mysql://mysql-database:3306/test?allowPublicKeyRetrieval=true&useSSL=false","root","root");
 //        Connection c = null;
 //        try {
 //            Class.forName("com.mysql.jdbc.Driver");

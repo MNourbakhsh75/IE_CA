@@ -1,0 +1,32 @@
+version: '3'
+services:
+  server:
+    container_name: ie-back
+    build: .
+    ports:
+      - 8084:8080
+    depends_on:
+      - db
+    links:
+      - mysql-database
+  db:
+    container_name: ie-db
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'joboonjadb'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3338:3306'
+    expose:
+      - '3306'
+  front:
+    container_name: ie-front
+    image: ie-react
+    build: views/.
+    restart: always
+    expose:
+      - '80'
+    ports:
+      - '3003:80'
