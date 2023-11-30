@@ -41,7 +41,7 @@ JobOonja functions as a job-matching platform similar to <a href="https://jooble
 
 The project encompassed various phases. The first phase entailed designing and implementing the program logic and back end using <a hre="https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm">MVC design pattern</a>. The second phase involved crafting the front end design using React. A database for data storage with JPA was also designed, and mechanisms such as JWT, Docker, and Kubernetes were employed.
 
-The backend section of the project resides in this repository, containing all the codes within the <a href="https://github.com/MNourbakhsh75/IE_CA/tree/master/src/main">src/main</a> folder. This folder includes the API gateway, services, and all related elements. The front end of the project can also be found in this link.
+The back end section of the project resides in this repository, containing all the codes within the <a href="https://github.com/MNourbakhsh75/IE_CA/tree/master/src/main">src/main</a> folder. This folder includes the API gateway, services, and all related elements. The front end of the project can also be found in this link.
 
 ## Built With
 
